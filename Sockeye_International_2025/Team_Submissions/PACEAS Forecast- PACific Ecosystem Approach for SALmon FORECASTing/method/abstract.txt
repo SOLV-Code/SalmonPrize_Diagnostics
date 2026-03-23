@@ -1,0 +1,16 @@
+Multiview embedding with environmental covariates
+
+We used multiview embedding, a form of empirical dynamic modelling. Rather than define mechanistic models, the approach translates time series of data into a path through a multi-dimensional space, whose axes are lagged values of the variables. We modelled each stock separately, and included various relevant environmental covariates. These were sea-surface temperature, Pink Salmon abundance in the North Pacific, Fraser River discharge, zooplankton in the Strait of Georgia, the Pacific Decadal Oscillation, and the North Pacific Current Bifurcation index.
+
+All code is available at https://github.com/andrew-edwards/sockeyePrize, though is not easily usable by anyone else at the moment and there are various
+improvements we would make. Most of the covariates were taken from our pacea R package.
+
+References for background:
+
+Edwards A.M, Rogers L.A., and Holt C.A. (2024). Explaining empirical dynamic modelling using verbal, graphical and mathematical approaches. Ecology and
+Evolution, 14:e10903, 1-12. https://doi.org/10.1002/ece3.10903
+
+Edwards A.M., Tai T.C., Watson J., Peña M.A., Hilborn A., Hannah C.G., Rooper C.N., Flynn K.L., and Oldford, G.L. (2024). pacea: An R package of Pacific
+ecosystem information to help facilitate an ecosystem approach to fisheries management. https://github.com/pbs-assess/pacea
+
+Ye H., and Sugihara, G. (2016). Information leverage in interconnected ecosystems: overcoming the curse of dimensionality. Science, 353:922-925. https://doi.org/10.1126/science.aag0863.

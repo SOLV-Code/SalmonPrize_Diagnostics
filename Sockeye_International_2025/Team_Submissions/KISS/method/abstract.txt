@@ -1,0 +1,9 @@
+Simple sockeye forecasts based on recent productivity and age-at-return proportions
+
+The data sets for this year’s sockeye competition all show substantial evidence of non-stationarity in key population parameters.  In particular, the Fraser summer run stocks have shown persistent declines in productivity as measured by recruits/spawner, and Bristol Bay stocks have shown recent increases in proportion of fish maturing at age 4 along with cyclic variation in productivity (earlier maturation; Fraser stocks show a weak opposite trend toward later maturation). Based on these observations, we chose to develop simple forecasts based on recent average productivity and age at return proportions.
+The forecasting equation that we used for all stock was simply
+Nforecast = RS*(P4St-4+P5St-5+p6St-6)				(1).
+
+Here, RS is geometric mean recruits/spawner over the most recent 3 brood years (2017-19), Pi is proportion of brood year recruits at age i, and St is total spawners in brood year t.  We excluded one anomalously high R/S value for the Raft river in calculating its average, and also one anomalously high recent R/S for Ugashik.   Two of the Bristol Bay stocks showed severe retrospective errors (overpredictions) for the 2024 run, Naknek and Egegik.  We recommend using either sibling forecasts or simply the observed 2024 run sizes for these two stocks.
+
+These values give a total Bristol Bay forecast of 57.5 million, and Fraser summer forecast of 3.6 million.  For comparison, the 2024 Bristol Bay run was 51.4 million, while the Fraser summer run was radically lower (0.175 million, would have been 0.3 before accounting for Chilko landslide impact on spawners).

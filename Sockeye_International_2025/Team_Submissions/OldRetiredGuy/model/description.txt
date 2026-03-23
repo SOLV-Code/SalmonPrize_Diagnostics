@@ -1,0 +1,1 @@
+The models are mostly linear or linear under log-transform, and are documented in the individual spreadsheets.

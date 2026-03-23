@@ -1,0 +1,9 @@
+We evaluated five machine learning algorithms: (1) Random Forest Regressor, (2) HistGradientBoostingRegressor, (3) XGBoost Regressor, (4) Linear Regression, and (5) Polynomial Regression (Linear Regression with degree-2 polynomial features). Each model was trained using annual samples consisting of features observed from year y to y–5, with the target variable being total salmon returns in year y+1. Feature selection was performed using SelectKBest, considering either all features, the top 20, the top 10, or the top 6, based on their statistical association with the target. We also tested the inclusion of time-lagged features (lags of 1–5 years).
+The feature set included variables from three categories:
+•	Return and spawner data from Angler’s Atlas and Gottfried Pestal, including:
+o	Total_Returns and 18 age-class return features (AgeClass_0.1, AgeClass_1.2, etc.)
+o	Spawner counts for brood years y–2 to y–4 and their sum (total_spawners_y_minus_2_to_4)
+•	Oceanographic and climate indices (from the pacea R package and NOAA):
+o	Pacea_ALPI_Anomaly, npi_mean_NovMar, oni_mean_DecFeb, mei_mean_AprSep, npgo_mean_DecFeb, ao_mean_DecMar, pdo_mean_DecMar, pdo_mean_MaySep, sst_aprjul, sst_anom, and sss_mayaug
+•	Dummy variables encoding river identity (e.g., River_Alagnak, River_Bonneville Lock & Dam, etc.)
+In total, the full dataset comprised 892 samples: 488 for Bristol Bay, 39 for Columbia River, and 365 for Fraser River. For Bristol Bay, only samples from 1995 onward were used. Features with missing values (e.g., sea surface temperature before 1984 in Fraser River) were removed prior to training. Ugashik River (Bristol Bay) models were trained separately without spawner data due to unavailability.

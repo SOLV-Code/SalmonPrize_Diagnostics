@@ -1,0 +1,19 @@
+Dynamic linear sibling or cohort regression models were used to predict the 2023 return abundance of the 1.2, 1.3, 2.2, and 2.3 age classes (European age designation). Sibling or more precisely cohort regression models use the return abundance of younger members of the same cohort, that experienced the same conditions at ocean entry, to predict older members of the same cohort. For example, a high return abundance of the 1.1 age class for a stock in 2020 (2017 cohort) might suggest that the abundance of the 1.2 age class may be higher than average in the following year 2021, because these fish encountered conditions conducive to high survival at ocean entry in the summer/fall of 2019 and winter of 2020. 
+
+These sibling regression models implicitly assume a static relationship between the return abundance of younger and older individuals from the same cohort, which is violated by long-term changes in the average age structure at return, arising from changes in maturation schedule or late-stage marine mortality. Dynamic linear sibling regression models allow these relationships to evolve over time, and generate predictions given the estimated current state of the system.
+
+The specific model structure predicts the abundance of returning fish from stock s of ocean age a in calendar year t, R(s,t,a), as a function of the return abundance of the same stock in the previous year (t-1) at ocean age a-1. 
+
+R(s,t,a) = a(t) + b(t)*R(s,t-1,a-1) + e(t)
+
+Where a(t) is the value of a dynamic intercept coefficient in year t, describing changes in average production of ocean age a individual over time, and b(t) describes the relationship between the age classes and changes if present over time. 
+
+Both a(t) and b(t) are estimated as random walks where:
+a(t) ~ Normal(a(t-1), sigma_a)
+b(t) ~ Normal(b(t-1), sigma_b)
+
+And sigma_a and sigma_b are process variation terms describing the magnitude of average interannual change in a(t) and b(t), and e(t) is the residual variation in the regression relationship:
+
+e(t) ~ Normal(0, sigma_e).
+
+Boosted regression trees were implemented at the stock level within the tidymodels framework in R, using the xgboost implementation. Features used to predict annual total (i.e. across age classes) run size in year (t) included, run sizes in t-1, t-2, t-3, t-4, t-5, spawning abundance in t-4, t-5, t-6, t-7, the abundance of "sibling" age classes (1.1, 1.2, 1.3, 2.1, 2.2, 2.3) in t-1, and the average value of the Pacific Decadal Oscillation, North Pacific Gyre Oscillation, and the Arctic Oscillation indices averaged across the months January-May in year t-2. The time lags were identified to encompass the dominant age classes for each each stock.

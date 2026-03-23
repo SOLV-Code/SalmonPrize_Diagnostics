@@ -1,0 +1,7 @@
+Salmon ForecastR Shiny App & R Package
+
+The forecastR tool kit is designed to streamline the exploration of fundamentally different model types within an iterative working group process. It allows users to explore retrospective model rankings and vary specifications in real time (e.g., revise some model settings, add more candidate models, revise the ranking criteria, and rerun).  Official releases, package, and app source code are available at https://github.com/SalmonForecastR
+
+We approached this competition as an illustration of the full workflow that the forecastR tool kit was designed for. Therefore, we restricted the analyses to model forms that are already included in the package and built detailed notes for each step.  Code, outputs, and notes are available at github.com/SOLV-Code/Team-forecastR-2025SockeyeInternational 
+
+Candidate models for age-specific forecasts included naive models (running average), time series models (ARIMA, exponential smoothing), and sibling regressions (simple, log-power, time-varying). Sibling regressions with environmental covariates were explored for 2 stocks, but not included in the final shortlist of candidate models. Model selection was done in 3 stages: (1) some model options include a selection step based on AIC (e.g., exponential smoothing), (2) for each annual forecast, ranking across model forms is done based on a retrospective evaluation, (3) for age class for each stock, we selected a model for the 2025 forecast that was consistently top ranked for individual forecasts from 2020 to 2024.

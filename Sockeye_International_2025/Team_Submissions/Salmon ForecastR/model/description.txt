@@ -1,0 +1,2 @@
+Selected models differed by stock and age. The file Forecast_Details.csv (uploaded above) lists the specifics. The approach for each step of the analysis is documented at github.com/SOLV-Code/Team-forecastR-2025SockeyeInternational.  The app and R package are available at https://github.com/SalmonForecastR.
+The latest forecastR report provides details for each candidate model form and is attached.

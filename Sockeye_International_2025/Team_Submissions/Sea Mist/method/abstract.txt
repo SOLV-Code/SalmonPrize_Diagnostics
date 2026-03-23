@@ -1,0 +1,3 @@
+CMISST (pronounced sea mist)
+
+Covariance Map Index of Sea Surface Temperature (CMISST) creates a map of covariance values between spatially explicit SST and the response variable of interest. This map can be thought of as the optimal distribution of SST anomalies. It then creates an index of how similar the spatial distribution of SST anomalies during any given period (year) is to that covariance map (using simple regression). This index can be used as a covariate in a forecasting model. Here, I’ve used simple linear regression to model sockeye returns. A manuscript with much more detail is in review.

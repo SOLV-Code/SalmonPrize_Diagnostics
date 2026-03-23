@@ -1,0 +1,3 @@
+See above. All our results are saved as .pdf files, but are not really written in a concise way that would be easily understandable by others. There is also one .pdf file (generated from R Markdown files available in our GitHub site) for each stock. 
+We used previously published methods and our two public R packages (pacea and pbsEDM). Our work is fully reproducible and traceable, just not easily run by others at the moment.
+Doing retrospectives would be prohibitively difficult with our current set up. We aim to refine our methods for next year.
