@@ -93,34 +93,10 @@ write_csv(results.obj$RanksByPrize,paste0(folder.use,"/Diagnostics/MAIN_RanksByP
 # 3) GENERATE SUMMARY PLOTS
 ############################################################################
 
+source("FUNCTIONS/SalmonPrize_DiagnosticFunctions.R")
 
 
-
-plot_PM <- function(src.obj,pm.plot = "MAPE",system.plot = "All",
-                    ylim.use = NULL,title.use=NULL,
-                    ylab.use = NULL,
-                    y.scalar.use = NULL # capture scalar in ylab.use axis label!!!!
-                    ){
-
-values.df <- src.obj$Results_Details %>% dplyr::filter(System == system.plot, PM == pm.plot, Version == "Values") %>%
-              select(-System, -PM,-Version)
-
-if(!is.null(y.scalar.use)){values.df <- values.df/y.scalar.use}
-
-if(is.null(title.use)){title.use <- paste0(system.plot,": ",pm.plot)}
-if(is.null(ylab.use)){ylab.use <- pm.plot}
-
-plot(rep(1,length(values.df)),values.df, xlim=c(0.93,1.4),ylim=ylim.use,
-     axes=FALSE,xlab = "",ylab = ylab.use, pch=21,col="darkblue",bg="lightgrey",cex = 1.2,
-      col.main="darkblue")
-axis(2, las=1)
-text(rep(1.05,length(values.df)),values.df,labels = names(values.df),
-     col="darkblue",adj= 0,xpd=NA)
-title(main=title.use,line=-0.5,col.main="darkblue")
-
-}
-
-
+# PLOT TYPE: 1 PLOT FOR EACH PM, 4 PANELS (All, BB, FR, CR)
 
 
 for(pm.do in c("MAPE", "MPE", "RMSE")){
@@ -151,36 +127,13 @@ if(pm.do == "RMSE"){
   }
 
 
-
-
-
-
-#pm.title <- "Mean Percent Error"
-#range(results.obj$Results_Details %>% dplyr::filter(Version == "Values",PM==pm.do) %>% select(-System,-PM,-Version))
-#ylim.overall <- c(3*10^6,0)
-
-#
-#pm.title <- "Mean Absolute Error"
-#range(results.obj$Results_Details %>% dplyr::filter(Version == "Values",PM==pm.do) %>% select(-System,-PM,-Version))
-#ylim.overall <- c(3*10^6,0)
-
-
-#p
-#
-#range(results.obj$Results_Details %>% dplyr::filter(Version == "Values",PM==pm.do) %>% select(-System,-PM,-Version))
-#ylim.overall <- c(5*10^6,0)
-
-
-
-
-png(filename = paste0(folder.use,"/Diagnostics/PM_ValueComparison_",pm.do,".png"),
-    width = 480*4.5, height = 480*3.5, units = "px", pointsize = 14*3.7, bg = "white",  res = NA)
+png(filename = paste0(folder.use,"/Diagnostics/PM_ValueComparison_ByPM_",pm.do,".png"),
+    width = 480*5.5, height = 480*3.9, units = "px", pointsize = 14*3.7, bg = "white",  res = NA)
 
 
 #par(mfrow=c(2,2),mai=c(2.5,2.5,2,2))
 
 par(mfrow=c(1,4),mai=c(1,2.2,1.5,1.5))
-
 
 
 plot_PM(results.obj,pm.plot = pm.do ,system.plot = "All",
@@ -211,3 +164,133 @@ dev.off()
 
 
 } # end looping through PM
+
+
+
+
+# PLOT TYPE: 1 PLOT FOR SYSTEM, 2 PANELS (MAPE, MAE)
+
+
+for(system.do in c("All", "Bristol Bay", "Fraser River","Columbia")){
+
+  png(filename = paste0(folder.use,"/Diagnostics/PM_ValueComparison_BySystem_",system.do,"_Zoomed.png"),
+      width = 480*4.5, height = 480*3.5, units = "px", pointsize = 14*3.7, bg = "white",  res = NA)
+
+
+  #par(mfrow=c(2,2),mai=c(2.5,2.5,2,2))
+
+  par(mfrow=c(1,2),mai=c(1,2.2,2,1.5))
+
+
+  plot_PM(results.obj,pm.plot = "MAPE" ,system.plot = system.do,
+          ylim.use = c(100,0),title.use="MAPE",
+          ylab.use = NULL, y.scalar.use = NULL )
+  abline(h=0,col="red",lwd=3)
+
+
+  plot_PM(results.obj,pm.plot = "MPE" ,system.plot = system.do,
+          ylim.use = c(-100,100),title.use="MPE",
+          ylab.use = "", y.scalar.use = NULL  )
+  abline(h=0,col="red",lwd=3)
+
+
+
+  title(main=system.do,outer=TRUE,line=-1,col.main="darkblue")
+
+
+  dev.off()
+
+
+} # end looping through systems
+
+
+
+#############################
+# DETAILS BY STOCK
+# not a function yet!
+
+
+for(stk.plot in predictions.df$Stock){
+
+system.label <- results.obj$PercError %>% dplyr::filter(Stock==stk.plot) %>% select(System)
+
+png(filename = paste0(folder.use,"/Diagnostics/Results_ByStock_",system.label,"_",stk.plot,".png"),
+    width = 480*4.5, height = 480*3.5, units = "px", pointsize = 14*3.7, bg = "white",  res = NA)
+
+par(mfrow=c(1,2),mai=c(2,3,4,4))
+
+src.obj <- results.obj
+
+
+
+
+perc.df <- src.obj$PercError %>% dplyr::filter(Stock == stk.plot)
+perc.df
+
+system.label <- perc.df$System
+
+perc.df <- perc.df %>% select(-System,-Stock)
+
+
+obs.run <- src.obj$Predictions %>% dplyr::filter(Stock == stk.plot) %>% select(Run)
+obs.run
+
+if(obs.run >10^6){ scalar.use <- 10^6; scalar.label = "M"; round.use <- 2}
+if(obs.run > 10^4 & obs.run < 10^6){ scalar.use <- 10^3; scalar.label = "k"; round.use <- 0}
+if(obs.run <= 10^4 ){ scalar.use <- 1; scalar.label = ""; round.use <- 0}
+
+vals.50p <- prettyNum(round(obs.run*0.5/scalar.use,round.use),big.mark=",")
+labels.50p <- c(paste0("-",vals.50p,scalar.label), paste0(vals.50p,scalar.label))
+labels.50p
+
+vals.25p <- prettyNum(round(obs.run*0.25/scalar.use,round.use),big.mark=",")
+labels.25p <- c(paste0("-",vals.25p,scalar.label), paste0(vals.25p,scalar.label))
+labels.25p
+
+
+
+plot(rep(1,length(perc.df)),perc.df, xlim=c(0.93,1.4),ylim=range(perc.df,0),
+     axes=FALSE,xlab = "",ylab = "", pch=21,col="darkblue",bg="lightgrey",cex = 1.2,
+     main = "Full Range", col.main="darkblue")
+axis(2, las=1)
+abline(h = 0 , col="red",lwd=6)
+
+abline(h = 100* c(-0.5,-0.25,0.25,0.5),col="darkgrey",lty=2,lwd=3)
+axis(4,at = 100* c(-0.5,0.5),labels =labels.50p, las=1,tick=FALSE)
+axis(4,at = 100* c(-0.25,0.25),labels =labels.25p, las=1,tick=FALSE)
+
+text(rep(1.05,length(perc.df)),perc.df,labels = names(perc.df),
+     col="darkblue",adj= 0)
+
+text(par("usr")[1], par("usr")[4], labels = "% Error", xpd=NA ,adj=c(1,0))
+#text(par("usr")[2], par("usr")[4], labels = "Error", xpd=NA) #,adj=0.1)
+
+
+plot(rep(1,length(perc.df)),perc.df, xlim=c(0.93,1.4),ylim=c(-60,60),
+     axes=FALSE,xlab = "",ylab = "", pch=21,col="darkblue",bg="lightgrey",cex = 1.2,
+     main = "Zoomed In", col.main="darkblue")
+axis(2, at= c(seq(-50,50,by=25)),las=1)
+abline(h = 0 , col="red",lwd=6)
+abline(h = 100* c(-0.5,-0.25,0.25,0.5),col="darkgrey",lty=2,lwd=3)
+axis(4,at = 100* c(-0.5,0.5),labels =labels.50p, las=1,tick=FALSE)
+axis(4,at = 100* c(-0.25,0.25),labels =labels.25p, las=1,tick=FALSE)
+
+text(rep(1.05,length(perc.df)),perc.df,labels = names(perc.df),
+     col="darkblue",adj= 0)
+text(par("usr")[1], par("usr")[4], labels = "% Error", xpd=NA ,adj=c(1,0))
+
+
+title(main=paste0(system.label,": ",stk.plot),outer=TRUE,line=-1,col.main="darkblue")
+title(main=paste0("Obs Run = ",prettyNum(obs.run,big.mark=",")),outer=TRUE,line=-2,col.main="darkblue",cex.main=0.95)
+
+
+
+
+dev.off()
+
+
+}
+
+
+
+
