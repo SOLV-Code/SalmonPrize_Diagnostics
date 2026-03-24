@@ -1,0 +1,41 @@
+Prize,Team,MAPE,MAE,MPE,MRE,RMSE
+1 Best Overall Prediction,HookedOnData,1,4,6,5,3
+1 Best Overall Prediction,Salmanazar,2,1,4,1,2
+1 Best Overall Prediction,OldRetiredGuy,3,3,5,6,5
+1 Best Overall Prediction,SalmonCounts,4,6,8,3,7
+1 Best Overall Prediction,KISS,5,2,2,2,1
+1 Best Overall Prediction,SeaMist,6,10,10,10,9
+1 Best Overall Prediction,SalmonForecastR,7,5,7,9,4
+1 Best Overall Prediction,SalmonCruz,8,8,1,8,10
+1 Best Overall Prediction,FarSouthSalmon,9,9,9,7,8
+1 Best Overall Prediction,PACEASForecast,10,7,3,4,6
+2 Best Bristol Bay Prediction,OldRetiredGuy,1,2,5,3,5
+2 Best Bristol Bay Prediction,Salmanazar,2,1,6,6,1
+2 Best Bristol Bay Prediction,HookedOnData,3,4,2,2,4
+2 Best Bristol Bay Prediction,SalmonForecastR,4,5,9,9,3
+2 Best Bristol Bay Prediction,KISS,5,3,3,1,2
+2 Best Bristol Bay Prediction,SalmonCounts,6,7,4,7,7
+2 Best Bristol Bay Prediction,PACEASForecast,7,6,1,4,6
+2 Best Bristol Bay Prediction,SalmonCruz,8,8,8,8,10
+2 Best Bristol Bay Prediction,FarSouthSalmon,9,9,7,5,8
+2 Best Bristol Bay Prediction,SeaMist,10,10,10,10,9
+3 Best Fraser Prediction,HookedOnData,1,3,3,5,3
+3 Best Fraser Prediction,KISS,2,1,4,2,1
+3 Best Fraser Prediction,Salmanazar,3,4,5,6,4
+3 Best Fraser Prediction,OldRetiredGuy,4,5,6,7,5
+3 Best Fraser Prediction,SalmonCounts,5,2,7,4,2
+3 Best Fraser Prediction,SeaMist,6,6,8,8,7
+3 Best Fraser Prediction,SalmonCruz,7,10,2,1,10
+3 Best Fraser Prediction,PACEASForecast,8,8,9,9,9
+3 Best Fraser Prediction,FarSouthSalmon,9,9,10,10,8
+3 Best Fraser Prediction,SalmonForecastR,10,7,1,3,6
+4 Best Columbia Prediction,HookedOnData,1,1,1,1,1
+4 Best Columbia Prediction,SalmonCounts,2,2,2,2,2
+4 Best Columbia Prediction,SeaMist,3,3,3,3,3
+4 Best Columbia Prediction,Salmanazar,4,4,4,4,4
+4 Best Columbia Prediction,SalmonForecastR,5,5,5,5,5
+4 Best Columbia Prediction,OldRetiredGuy,6,6,6,6,6
+4 Best Columbia Prediction,FarSouthSalmon,7,7,7,7,7
+4 Best Columbia Prediction,KISS,8,8,8,8,8
+4 Best Columbia Prediction,SalmonCruz,9,9,9,9,9
+4 Best Columbia Prediction,PACEASForecast,10,10,10,10,10
