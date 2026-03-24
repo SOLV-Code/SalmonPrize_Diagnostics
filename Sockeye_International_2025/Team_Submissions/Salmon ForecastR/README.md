@@ -36,6 +36,6 @@ We approached the 2025 competition as an illustration of the full workflow we've
 - Step 8: Lessons learned
 
 
-[This repo](https://github.com/SOLV-Code/Team-forecastR-2025SockeyeInternational) has detailed documentation for each step. [This Readme] lists the top-ranked models by stock and age class, shows the resulting 2025 forecasts, and shows retrospective diagnostics.
+[This repo](https://github.com/SOLV-Code/Team-forecastR-2025SockeyeInternational) has detailed documentation for each step. [This Readme](https://github.com/SOLV-Code/Team-forecastR-2025SockeyeInternational/tree/main/NOTES/7_Select_2025FC) lists the top-ranked models by stock and age class, shows the resulting 2025 forecasts, and shows retrospective diagnostics.
 
 
