@@ -59,6 +59,18 @@ predictions.df
 write_csv(predictions.df,paste0(folder.use,"/Diagnostics/MAIN_PredictionsSummary.csv"))
 
 
+# create alternative version that includes agency forecasts
+
+agency.fc <- read.csv(paste0(folder.use,"/AgencyFC/",folder.use,"_AgencyForecasts.csv"),
+                      comment="#")
+
+predictions.inclagency.df <- predictions.df %>%
+  left_join(agency.fc %>% select(Stock, Forecast) %>% dplyr::rename(AgencyFC = Forecast),
+            by="Stock") %>% select(System,Stock,Run,AgencyFC,everything())
+
+write_csv(predictions.inclagency.df,paste0(folder.use,"/Diagnostics/MAIN_PredictionsSummary_InclAgencyFC.csv"))
+
+
 
 ############################################################################
 # 2) CALCULATE THE PERFORMANCE MEASURES AND RANKS
@@ -76,6 +88,16 @@ write_csv(results.obj$Results_Details,paste0(folder.use,"/Diagnostics/DETAILS_Ra
 results.obj$RanksByPrize
 write_csv(results.obj$RanksByPrize,paste0(folder.use,"/Diagnostics/MAIN_RanksByPrize.csv"))
 
+
+results.obj.inclagency <- calc_PMandRanks(predictions.inclagency.df)
+
+names(results.obj.inclagency)
+
+results.obj.inclagency$Results_Details
+write_csv(results.obj.inclagency$Results_Details,paste0(folder.use,"/Diagnostics/DETAILS_RanksAndValuesForAltPM_InclAgencyFC.csv"))
+
+results.obj.inclagency$RanksByPrize
+write_csv(results.obj.inclagency$RanksByPrize,paste0(folder.use,"/Diagnostics/MAIN_RanksByPrize_InclAgencyFC.csv"))
 
 
 # TO DO: team-specific summaries
@@ -141,21 +163,48 @@ plot_PM(results.obj,pm.plot = pm.do ,system.plot = "All",
         ylab.use = ylab.overall, y.scalar.use = y.scalar )
   abline(h=0,col="red",lwd=3)
 
+
+agencypm.tmp <- results.obj.inclagency$Results_Details  %>%
+    dplyr::filter(System == "All",PM == pm.do, Version == "Values") %>%
+    select(AgencyFC)/y.scalar
+points(1,agencypm.tmp,col="red",pch=8,cex=1.2)
+text(1.05,agencypm.tmp,"Agency FC",col="red",adj=0)
+
+
 plot_PM(results.obj,pm.plot = pm.do ,system.plot = "Bristol Bay",
         ylim.use = ylim.overall,title.use="Bristol Bay",
 ylab.use = "", y.scalar.use = y.scalar  )
   abline(h=0,col="red",lwd=3)
+
+  agencypm.tmp <- results.obj.inclagency$Results_Details  %>%
+    dplyr::filter(System == "Bristol Bay",PM == pm.do, Version == "Values") %>%
+    select(AgencyFC)/y.scalar
+  points(1,agencypm.tmp,col="red",pch=8,cex=1.2)
+  text(1.05,agencypm.tmp,"Agency FC",col="red",adj=0)
+
+
 
 plot_PM(results.obj,pm.plot = pm.do ,system.plot = "Fraser River",
         ylim.use = ylim.overall,title.use="Fraser River",
 ylab.use = "", y.scalar.use = y.scalar  )
   abline(h=0,col="red",lwd=3)
 
+  agencypm.tmp <- results.obj.inclagency$Results_Details  %>%
+    dplyr::filter(System == "Fraser River",PM == pm.do, Version == "Values") %>%
+    select(AgencyFC)/y.scalar
+  points(1,agencypm.tmp,col="red",pch=8,cex=1.2)
+  text(1.05,agencypm.tmp,"Agency FC",col="red",adj=0)
+
 plot_PM(results.obj,pm.plot = pm.do ,system.plot = "Columbia",
         ylim.use = ylim.overall,title.use="Columbia",
         ylab.use = "", y.scalar.use = y.scalar  )
   abline(h=0,col="red",lwd=3)
 
+  agencypm.tmp <- results.obj.inclagency$Results_Details  %>%
+    dplyr::filter(System == "Columbia",PM == pm.do, Version == "Values") %>%
+    select(AgencyFC)/y.scalar
+  points(1,agencypm.tmp,col="red",pch=8,cex=1.2)
+  text(1.05,agencypm.tmp,"Agency FC",col="red",adj=0)
 
 title(main=pm.title,outer=TRUE,line=-1,col.main="darkblue")
 
@@ -188,12 +237,25 @@ for(system.do in c("All", "Bristol Bay", "Fraser River","Columbia")){
   abline(h=0,col="red",lwd=3)
 
 
+  agencypm.tmp <- results.obj.inclagency$Results_Details  %>%
+    dplyr::filter(System == system.do, PM == "MAPE", Version == "Values") %>%
+    select(AgencyFC)
+  points(1,agencypm.tmp,col="red",pch=8,cex=1.2)
+  text(1.05,agencypm.tmp,"Agency FC",col="red",adj=0)
+
+
+
   plot_PM(results.obj,pm.plot = "MPE" ,system.plot = system.do,
           ylim.use = c(-100,100),title.use="MPE",
           ylab.use = "", y.scalar.use = NULL  )
   abline(h=0,col="red",lwd=3)
 
 
+  agencypm.tmp <- results.obj.inclagency$Results_Details  %>%
+    dplyr::filter(System == system.do, PM == "MPE", Version == "Values") %>%
+    select(AgencyFC)
+  points(1,agencypm.tmp,col="red",pch=8,cex=1.2)
+  text(1.05,agencypm.tmp,"Agency FC",col="red",adj=0)
 
   title(main=system.do,outer=TRUE,line=-1,col.main="darkblue")
 
@@ -232,6 +294,18 @@ system.label <- perc.df$System
 perc.df <- perc.df %>% select(-System,-Stock)
 
 
+agencypm.tmp <- results.obj.inclagency$PercError  %>%
+  dplyr::filter(Stock == stk.plot) %>%
+  select(AgencyFC)
+
+
+
+
+
+
+
+
+
 obs.run <- src.obj$Predictions %>% dplyr::filter(Stock == stk.plot) %>% select(Run)
 obs.run
 
@@ -262,6 +336,10 @@ axis(4,at = 100* c(-0.25,0.25),labels =labels.25p, las=1,tick=FALSE)
 text(rep(1.05,length(perc.df)),perc.df,labels = names(perc.df),
      col="darkblue",adj= 0)
 
+points(1,agencypm.tmp,col="red",pch=8,cex=1.2)
+text(1.05,agencypm.tmp,"Agency FC",col="red",adj=0)
+
+
 text(par("usr")[1], par("usr")[4], labels = "% Error", xpd=NA ,adj=c(1,0))
 #text(par("usr")[2], par("usr")[4], labels = "Error", xpd=NA) #,adj=0.1)
 
@@ -277,6 +355,10 @@ axis(4,at = 100* c(-0.25,0.25),labels =labels.25p, las=1,tick=FALSE)
 
 text(rep(1.05,length(perc.df)),perc.df,labels = names(perc.df),
      col="darkblue",adj= 0)
+
+points(1,agencypm.tmp,col="red",pch=8,cex=1.2)
+text(1.05,agencypm.tmp,"Agency FC",col="red",adj=0)
+
 text(par("usr")[1], par("usr")[4], labels = "% Error", xpd=NA ,adj=c(1,0))
 
 
