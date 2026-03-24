@@ -122,3 +122,29 @@ results.details <- bind_cols(data.frame(System = "All",PM = "MAPE",Version="Valu
 }
 
 
+
+plot_PM <- function(src.obj,pm.plot = "MAPE",system.plot = "All",
+                    ylim.use = NULL,title.use=NULL,
+                    ylab.use = NULL,
+                    y.scalar.use = NULL # capture scalar in ylab.use axis label!!!!
+                    ){
+
+values.df <- src.obj$Results_Details %>% dplyr::filter(System == system.plot, PM == pm.plot, Version == "Values") %>%
+              select(-System, -PM,-Version)
+
+if(!is.null(y.scalar.use)){values.df <- values.df/y.scalar.use}
+
+if(is.null(title.use)){title.use <- paste0(system.plot,": ",pm.plot)}
+if(is.null(ylab.use)){ylab.use <- pm.plot}
+
+if(is.null(ylim.use)){ ylim.use <- rev(range(values.df,0 )) }
+
+
+plot(rep(1,length(values.df)),values.df, xlim=c(0.93,1.4),ylim=ylim.use,
+     axes=FALSE,xlab = "",ylab = ylab.use, pch=21,col="darkblue",bg="lightgrey",cex = 1.2)
+axis(2, las=1)
+text(rep(1.05,length(values.df)),values.df,labels = names(values.df),
+     col="darkblue",adj= 0) #,xpd=NA)
+title(main=title.use,line=0,col.main="darkblue")
+
+}
