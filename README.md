@@ -5,7 +5,7 @@ The [Salmon Prize](https://salmonprize.com/) organizes annual salmon forecasting
 
 ## Sockeye International
 
-* The [2025 Sockeye International](https://github.com/SOLV-Code/SalmonPrize_Diagnostics/tree/main/Sockeye_International_2025)included 14 sockeye stocks from Bristol Bay in Alaska, the Fraser River in British Columbia, and the Columbia River in Washington. 
+* The [2025 Sockeye International](https://github.com/SOLV-Code/SalmonPrize_Diagnostics/tree/main/Sockeye_International_2025) included 14 sockeye stocks from Bristol Bay in Alaska, the Fraser River in British Columbia, and the Columbia River in Washington. 
 
 * Presentations from the 2024 Sockeye International are available on [youtube](https://www.youtube.com/@SalmonPrize/videos).
 
