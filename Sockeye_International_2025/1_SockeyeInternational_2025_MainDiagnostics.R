@@ -61,74 +61,153 @@ write_csv(predictions.df,paste0(folder.use,"/Diagnostics/MAIN_PredictionsSummary
 
 
 ############################################################################
-# 2) CALCULATE THE PERFORMANCE MEASURES
+# 2) CALCULATE THE PERFORMANCE MEASURES AND RANKS
 ############################################################################
 
-calc_PMandRanks <- function(pred){
-# pred is a data frame with columns System, Stock, Run (obs run size) and then
-# 1 column for each team submission
+source("FUNCTIONS/SalmonPrize_DiagnosticFunctions.R")
 
-team.cols <-   names(pred)[-c(1:3)]
-#print(team.cols)
+results.obj <- calc_PMandRanks(predictions.df)
 
+names(results.obj)
 
-raw.error.src <- pred %>% select(all_of(team.cols)) - pred$Run
-perc.error.src <- round(raw.error.src / pred$Run *100,2)
+results.obj$Results_Details
+write_csv(results.obj$Results_Details,paste0(folder.use,"/Diagnostics/DETAILS_RanksAndValuesForAltPM.csv"))
 
-
-raw.error <- bind_cols(pred %>% select(System,Stock),
-                   raw.error.src)
-perc.error <- bind_cols(pred %>% select(System,Stock),
-                   perc.error.src)
-
-
-mape.all <- perc.error %>% summarize(across(all_of(team.cols), ~ round(mean(abs(.x)),2) ))
-
-mape.bysystem <- perc.error %>% group_by(System) %>% summarize(across(all_of(team.cols), ~ round(mean(abs(.x)),2) ))
-#print(mape.bysystem)
-
-#print(t(apply(mape.bysystem,1,rank, ties.method="average")))
-
-
-results.details <- bind_cols(data.frame(System = "All",PM = "MAPE",Version="Values"),mape.all) %>%
-                  bind_rows(
-                  bind_cols(data.frame(System = "All",PM = "MAPE",Version="Rank"),as.data.frame(rank(mape.all,ties.method = "average")) %>% t() ),
-                  bind_cols(mape.bysystem %>% mutate(PM = "MAPE",Version="Values") ),
-                  bind_cols(System = mape.bysystem$System, PM = "MAPE",Version="Rank",
-                            t(apply(mape.bysystem %>% select(-System),1,rank, ties.method="average")) )
-
-                  ) %>%
-  arrange(System,PM, Version)
+results.obj$RanksByPrize
+write_csv(results.obj$RanksByPrize,paste0(folder.use,"/Diagnostics/MAIN_RanksByPrize.csv"))
 
 
 
-out.list <- list(
-  Predictions = pred,
-  RawError = raw.error,
-  PercError = perc.error,
-  Results_Details = results.details)
+# TO DO: team-specific summaries
+#largest_APE - which stock?
+#smallest_APE  - which stock?
+# largest error  - which stock?
+#smallest error  - which stock?
+#rank by prize  - which stock?
 
-return(out.list)
+
+
+
+
+############################################################################
+# 3) GENERATE SUMMARY PLOTS
+############################################################################
+
+
+
+
+plot_PM <- function(src.obj,pm.plot = "MAPE",system.plot = "All",
+                    ylim.use = NULL,title.use=NULL,
+                    ylab.use = NULL,
+                    y.scalar.use = NULL # capture scalar in ylab.use axis label!!!!
+                    ){
+
+values.df <- src.obj$Results_Details %>% dplyr::filter(System == system.plot, PM == pm.plot, Version == "Values") %>%
+              select(-System, -PM,-Version)
+
+if(!is.null(y.scalar.use)){values.df <- values.df/y.scalar.use}
+
+if(is.null(title.use)){title.use <- paste0(system.plot,": ",pm.plot)}
+if(is.null(ylab.use)){ylab.use <- pm.plot}
+
+plot(rep(1,length(values.df)),values.df, xlim=c(0.93,1.4),ylim=ylim.use,
+     axes=FALSE,xlab = "",ylab = ylab.use, pch=21,col="darkblue",bg="lightgrey",cex = 1.2,
+      col.main="darkblue")
+axis(2, las=1)
+text(rep(1.05,length(values.df)),values.df,labels = names(values.df),
+     col="darkblue",adj= 0,xpd=NA)
+title(main=title.use,line=-0.5,col.main="darkblue")
 
 }
 
 
 
-results.obj <- calc_PMandRanks(predictions.df)
+
+for(pm.do in c("MAPE", "MPE", "RMSE")){
+
+if(pm.do == "MAPE"){
+pm.title <- "Mean Absolute Percent Error (MAPE)"
+range(results.obj$Results_Details %>% dplyr::filter(Version == "Values",PM==pm.do) %>% select(-System,-PM,-Version))
+ylim.overall <- c(200,0)
+ylab.overall <- "MAPE"
+y.scalar <- 1
+}
 
 
-names(results.obj)
-results.obj$Results_Details
+if(pm.do == "MPE"){
+  pm.title <- "Mean Percent Error (MPE)"
+  range(results.obj$Results_Details %>% dplyr::filter(Version == "Values",PM==pm.do) %>% select(-System,-PM,-Version))
+  ylim.overall <- c(-100,200)
+  ylab.overall <- "MPE"
+  y.scalar <- 1
+}
+
+if(pm.do == "RMSE"){
+    pm.title <- "Root Mean Square Error"
+    range(results.obj$Results_Details %>% dplyr::filter(Version == "Values",PM==pm.do) %>% select(-System,-PM,-Version))
+    ylim.overall <- c(5,0)
+    ylab.overall <- "RMSE (Mill)"
+    y.scalar <- 10^6
+  }
 
 
 
 
 
 
+#pm.title <- "Mean Percent Error"
+#range(results.obj$Results_Details %>% dplyr::filter(Version == "Values",PM==pm.do) %>% select(-System,-PM,-Version))
+#ylim.overall <- c(3*10^6,0)
 
-# for each team
-#largest_APE
-#smallest_APE
-#rank by prize
+#
+#pm.title <- "Mean Absolute Error"
+#range(results.obj$Results_Details %>% dplyr::filter(Version == "Values",PM==pm.do) %>% select(-System,-PM,-Version))
+#ylim.overall <- c(3*10^6,0)
 
 
+#p
+#
+#range(results.obj$Results_Details %>% dplyr::filter(Version == "Values",PM==pm.do) %>% select(-System,-PM,-Version))
+#ylim.overall <- c(5*10^6,0)
+
+
+
+
+png(filename = paste0(folder.use,"/Diagnostics/PM_ValueComparison_",pm.do,".png"),
+    width = 480*4.5, height = 480*3.5, units = "px", pointsize = 14*3.7, bg = "white",  res = NA)
+
+
+#par(mfrow=c(2,2),mai=c(2.5,2.5,2,2))
+
+par(mfrow=c(1,4),mai=c(1,2.2,1.5,1.5))
+
+
+
+plot_PM(results.obj,pm.plot = pm.do ,system.plot = "All",
+        ylim.use = ylim.overall,title.use="All",
+        ylab.use = ylab.overall, y.scalar.use = y.scalar )
+  abline(h=0,col="red",lwd=3)
+
+plot_PM(results.obj,pm.plot = pm.do ,system.plot = "Bristol Bay",
+        ylim.use = ylim.overall,title.use="Bristol Bay",
+ylab.use = "", y.scalar.use = y.scalar  )
+  abline(h=0,col="red",lwd=3)
+
+plot_PM(results.obj,pm.plot = pm.do ,system.plot = "Fraser River",
+        ylim.use = ylim.overall,title.use="Fraser River",
+ylab.use = "", y.scalar.use = y.scalar  )
+  abline(h=0,col="red",lwd=3)
+
+plot_PM(results.obj,pm.plot = pm.do ,system.plot = "Columbia",
+        ylim.use = ylim.overall,title.use="Columbia",
+        ylab.use = "", y.scalar.use = y.scalar  )
+  abline(h=0,col="red",lwd=3)
+
+
+title(main=pm.title,outer=TRUE,line=-1,col.main="darkblue")
+
+
+dev.off()
+
+
+} # end looping through PM
