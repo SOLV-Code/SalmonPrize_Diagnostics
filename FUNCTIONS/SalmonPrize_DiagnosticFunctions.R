@@ -1,8 +1,14 @@
 calc_PMandRanks <- function(pred){
   # pred is a data frame with columns System, Stock, Run (obs run size) and then
   # 1 column for each team submission
+  # if input is retrospective results, then it also has a "ReturnYear" column
 
-  team.cols <-   names(pred)[-c(1:3)]
+
+id.cols <- names(pred %>% select(any_of(c("System","Stock","ReturnYear","Run"))))
+team.cols <- names(pred %>% select(-any_of(c("System","Stock","ReturnYear","Run"))))
+
+print(id.cols)
+print(team.cols)
 
 # CALCULATE ERRORS
 
@@ -10,9 +16,9 @@ calc_PMandRanks <- function(pred){
   perc.error.src <- round(raw.error.src / pred$Run *100,2)
 
 
-  raw.error <- bind_cols(pred %>% select(System,Stock),
+  raw.error <- bind_cols(pred %>% select(any_of(id.cols)),
                          raw.error.src)
-  perc.error <- bind_cols(pred %>% select(System,Stock),
+  perc.error <- bind_cols(pred %>% select(any_of(id.cols)),
                           perc.error.src)
 
 

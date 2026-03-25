@@ -25,12 +25,15 @@
 Some observations:
 
 - 21 prizes vs 10 teams -> pretty good odds :-)
-- Avg error across 14 stocks = more than 1Mill (Best team: 1.2 Mill, largest avg error= 2.2Mill)
+- Mean Absolute Error (MAE) across 14 stocks = more than 1Mill (Best team: 1.2 Mill, largest avg error= 2.2Mill)
 - Avg error across stocks in the system:
    * All teams underestimated Fraser by a lot
    * 9 of 10 teams over-estimated Columbia River
    * Mixed Bag of over/under for Bristol Bay
-- How Agency FC did compared to competitors (using MAPE)
+- Comparing Systems:
+   * Mean Absolute Percent Error (MAPE) of winning team ca. 3 times larger for Fraser than for Bristol Bay
+   * MAPE for Columbia is not comparable, because only 1 stock aggregate being predicted.
+- How did the official agency forecast perform compared to competitors (using MAPE)
    * Overall 3rd
    * Bristol Bay 1st
    * Fraser 3rd
