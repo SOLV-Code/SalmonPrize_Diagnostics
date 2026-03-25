@@ -436,7 +436,16 @@ dev.off()
 stk.do <- "Chilko River"
 team.do <- "SalmonForecastR"
 
+agency.fc.sub <- agency.fc %>% dplyr::filter(Stock == stk.do)
+predictions.df.sub <- predictions.df %>% dplyr::filter(Stock == stk.do)
 
+models.metadata.sub <- models.metadata %>% dplyr::filter(Stock == stk.do,Team == team.do)
+team.info.sub <- team.info  %>% dplyr::filter(Team == team.do)
+
+
+
+team.folder <- paste0(submissions.path,"/",team.info.sub$Team_FullName,"/DiagnosticPlots")
+if(!dir.exists(team.folder)){dir.create(team.folder)}
 
 
 
@@ -452,11 +461,6 @@ names(team.df)[5] <- "TeamEntry"
 
 team.df
 
-agency.fc.sub <- agency.fc %>% dplyr::filter(Stock == stk.do)
-predictions.df.sub <- predictions.df %>% dplyr::filter(Stock == stk.do)
-
-models.metadata.sub <- models.metadata %>% dplyr::filter(Stock == stk.do,Team == team.do)
-team.info.sub <- team.info  %>% dplyr::filter(Team == team.do)
 
 title.use <- paste0(team.do,": ", stk.do," (",predictions.df.sub$System,")")
 
@@ -477,7 +481,17 @@ yr.range <- range(retro.yrs,competition.year)
 xlim.use <- yr.range +c(0,1.5)
 xlim.use
 
+
+
+png(filename = paste0(team.folder,"/",team.do,"_",stk.do,".png"),
+    width = 480*4.5, height = 480*3.5, units = "px", pointsize = 14*3.7, bg = "white",  res = NA)
+
+
 layout(matrix(c(1,1,2,3),ncol=2,byrow=TRUE),height=c(3,1))
+
+
+
+
 
 
 plot(1:5,1:5,xlim = xlim.use,ylim=ylim.use,
@@ -550,17 +564,19 @@ legend("topleft",legend = c("Obs","Team Entry"),
        bty="n",ncol=2)
 
 
-plot(1:5,1:5,axes=FALSE,xlab="",ylab="",type="n")
-text(0,5,"Team Model:",font =2,xpd=NA,adj=0 )
-text(0,3.5,paste(strwrap(models.metadata.sub$ModelNotes,width=60), collapse='\n'),
-     adj=c(0,1),xpd=NA)
-
-
-
+par(mai = c(0,0,0,0))
 
 plot(1:5,1:5,axes=FALSE,xlab="",ylab="",type="n")
-text(0,5,"Agency Model:",font =2,xpd=NA,adj=0 )
-text(0,3.5,paste(strwrap(agency.fc.sub$ForecastModel,width=60), collapse='\n'),
-               adj=c(0,1),xpd=NA)
+text(1,5,"Team Model:",font =2,xpd=NA,adj=0 )
+text(1,4.5,paste(strwrap(models.metadata.sub$ModelNotes,width=60), collapse='\n'),
+     adj=c(0,1),xpd=NA,cex=0.8)
 
 
+
+
+plot(1:5,1:5,axes=FALSE,xlab="",ylab="",type="n")
+text(1,5,"Agency Model:",font =2,xpd=NA,adj=0 )
+text(1,4.5,paste(strwrap(agency.fc.sub$ForecastModel,width=60), collapse='\n'),
+               adj=c(0,1),xpd=NA,cex=0.8)
+
+dev.off()
