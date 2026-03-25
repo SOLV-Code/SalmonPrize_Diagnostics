@@ -13,7 +13,7 @@ Bristol Bay,Ugashik River,6900000,TBD
 Bristol Bay,Wood River,7630000,TBD
 Columbia,All of Columbia River,350200,TBD
 Fraser River,Chilko River,928000,Cyclic Ricker model for age 4; sibling regression for age 5
-Fraser River,Late Stuart River,608000,Avg R/S for previous generstion for age 4; sibling regression for age 5
+Fraser River,Late Stuart River,608000,Avg R/S for previous generation for age 4; sibling regression for age 5
 Fraser River,Quesnel River,260000,Ricker with near-shore SST at Entrance Island in spring of 2023
 Fraser River,Raft River,13000,Like-Last-Year for age  4; sibling regression for age 5
 Fraser River,Stellako,281000,Larkin for age 4; sibling regression for age 5

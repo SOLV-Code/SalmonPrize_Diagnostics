@@ -1,0 +1,41 @@
+System,PM,Version,HookedOnData,SalmonCruz,SalmonForecastR
+All,MAE,Rank,1,2,3
+All,MAE,Values,1057947.48,1145816.4,1732648.51
+All,MAPE,Rank,2,1,3
+All,MAPE,Values,89.84,28.11,99.97
+All,MPE,Rank,3,1,2
+All,MPE,Values,60.59,-15.25,32.96
+All,MRE,Rank,1,3,2
+All,MRE,Values,-350726.53,-778397.38,-715696.94
+All,RMSE,Rank,2,1,3
+All,RMSE,Values,2288878.5023873933,2256675.596999715,2882692.7856164607
+Bristol Bay,MAE,Rank,1,2,3
+Bristol Bay,MAE,Values,1772944.95,1931105.03,2918613.27
+Bristol Bay,MAPE,Rank,2,1,3
+Bristol Bay,MAPE,Values,24.82,22.34,38.09
+Bristol Bay,MPE,Rank,1,3,2
+Bristol Bay,MPE,Values,1.77,-10.25,-8.66
+Bristol Bay,MRE,Rank,1,3,2
+Bristol Bay,MRE,Values,-575500.11,-1301586.04,-1217278.02
+Bristol Bay,RMSE,Rank,2,1,3
+Bristol Bay,RMSE,Values,3022810.19679337,2979619.1220956095,3807093.8879569424
+Columbia,MAE,Rank,1,2,3
+Columbia,MAE,Values,29424.51,137562,174504.4
+Columbia,MAPE,Rank,1,3,2
+Columbia,MAPE,Values,10.06,33.3,31.22
+Columbia,MPE,Rank,1,2,3
+Columbia,MPE,Values,-4.35,-30.61,-31.22
+Columbia,MRE,Rank,1,2,3
+Columbia,MRE,Values,-10730.18,-124902.8,-174504.4
+Columbia,RMSE,Rank,1,2,3
+Columbia,RMSE,Values,32318.44192844126,192359.05982199017,239001.8701307586
+Fraser River,MAE,Rank,2,1,3
+Fraser River,MAE,Values,119656.1,91005.48,146733.72
+Fraser River,MAPE,Rank,2,1,3
+Fraser River,MAPE,Values,209.84,36.29,212.73
+Fraser River,MPE,Rank,3,1,2
+Fraser River,MPE,Values,167.7,-20.18,112.37
+Fraser River,MRE,Rank,2,3,1
+Fraser River,MRE,Values,-59088.08,-71994.44,-21405.72
+Fraser River,RMSE,Rank,2,1,3
+Fraser River,RMSE,Values,221544.94500382524,216399.4414771905,256910.44344432556

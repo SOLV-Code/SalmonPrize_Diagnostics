@@ -13,7 +13,8 @@ source("FUNCTIONS/SalmonPrize_DiagnosticFunctions.R")
 # 1) COMPILE THE SUBMISSIONS
 ############################################################################
 
-
+competition.year <- 2025
+retro.yrs <- 2020:2024
 folder.use <- "Sockeye_International_2025"
 submissions.path <- paste0(folder.use,"/Team_Submissions")
 
@@ -28,6 +29,11 @@ teams.labels<- gsub("- PACific Ecosystem Approach for SALmon FORECASTing","",tea
 teams.labels<- gsub(" ","",teams.labels)
 teams.labels<- gsub("Team","",teams.labels)
 teams.labels
+
+models.metadata <- read.csv(paste0(submissions.path,"/Sockeye_International_2025_ModelMetadata.csv"),
+                                   comment="#")
+team.info <- read.csv(paste0(submissions.path,"/Team_Info.csv"),
+                      comment="#")
 
 # get observed runs
 predictions.df <- read.csv(paste0(folder.use,"/Observed_Runs/",folder.use,"_ObservedRuns.csv"),comment = "#")
@@ -46,7 +52,6 @@ team.pred <- read.csv(paste0(submissions.path,"/",team.do,"/predictions.csv"),co
 names(team.pred) <- c("SubmissionLabel",team.label.use)
 
 predictions.df <- predictions.df %>% left_join(team.pred, by="SubmissionLabel")
-
 
 
 }
@@ -71,12 +76,57 @@ predictions.inclagency.df <- predictions.df %>%
 write_csv(predictions.inclagency.df,paste0(folder.use,"/Diagnostics/MAIN_PredictionsSummary_InclAgencyFC.csv"))
 
 
+# repeat for retrospective
+# (same structure, just has a year column as well, and getting the run numbers from the data pack)
+
+
+retro.df<- read.csv(paste0(folder.use,"/CompetitionDataSet/Original_Data_Pack/Combined_Return_Bristol_Columbia_Fraser.csv"),
+                             comment="#") %>% select(System, River, ReturnYear,Total_Returns) %>%
+  mutate(System = gsub("Columbia River","Columbia",System)) %>%
+  dplyr::rename(Stock = River,Run = Total_Returns) %>%
+  mutate(Stock = paste(Stock,"River")) %>%
+  mutate(Stock= gsub("Bonneville Lock & Dam River", "All of Columbia River",Stock)) %>%
+  mutate(Stock= gsub("Stellako River", "Stellako",Stock)) %>%
+  dplyr::filter(ReturnYear %in% retro.yrs)
+
+
+# extract team retrospectives
+for(i in 1:length(teams.list)){
+
+  team.do <-  teams.list[i]
+  team.label.use <- teams.labels[i]
+  print(team.label.use)
+
+  retro.path <- paste0(submissions.path,"/",team.do,"/retrospective.csv")
+
+  if(file.exists(retro.path)){
+
+      team.retro <- read.csv(retro.path,comment = "#")  %>%
+                      pivot_longer(all_of(paste0("X",retro.yrs)),names_to = "ReturnYear") %>%
+                    mutate(ReturnYear = as.numeric(gsub("X","",ReturnYear)))
+         names(team.retro)[4] <- team.label.use
+
+       retro.df <- retro.df %>% left_join(team.retro, by =c("System","Stock","ReturnYear"))
+  }
+
+}
+
+
+
+
+retro.df
+
+
+
 
 ############################################################################
 # 2) CALCULATE THE PERFORMANCE MEASURES AND RANKS
 ############################################################################
 
 source("FUNCTIONS/SalmonPrize_DiagnosticFunctions.R")
+
+
+# calculate main competition results
 
 results.obj <- calc_PMandRanks(predictions.df)
 
@@ -88,6 +138,7 @@ write_csv(results.obj$Results_Details,paste0(folder.use,"/Diagnostics/DETAILS_Ra
 results.obj$RanksByPrize
 write_csv(results.obj$RanksByPrize,paste0(folder.use,"/Diagnostics/MAIN_RanksByPrize.csv"))
 
+# calculate alternative results treating agency forecast as another competitor
 
 results.obj.inclagency <- calc_PMandRanks(predictions.inclagency.df)
 
@@ -98,6 +149,22 @@ write_csv(results.obj.inclagency$Results_Details,paste0(folder.use,"/Diagnostics
 
 results.obj.inclagency$RanksByPrize
 write_csv(results.obj.inclagency$RanksByPrize,paste0(folder.use,"/Diagnostics/MAIN_RanksByPrize_InclAgencyFC.csv"))
+
+
+# calculate retrospective results
+
+
+results.obj.retro <- calc_PMandRanks(retro.df)
+
+names(results.obj.retro)
+
+results.obj.retro$Results_Details
+write_csv(results.obj.retro$Results_Details,paste0(folder.use,"/Diagnostics/DETAILS_RanksAndValuesForAltPM_RETRO.csv"))
+
+results.obj.retro$RanksByPrize
+write_csv(results.obj.retro$RanksByPrize,paste0(folder.use,"/Diagnostics/MAIN_RanksByPrize_RETRO.csv"))
+
+
 
 
 # TO DO: team-specific summaries
@@ -283,27 +350,17 @@ par(mfrow=c(1,2),mai=c(2,3,4,4))
 
 src.obj <- results.obj
 
-
-
-
 perc.df <- src.obj$PercError %>% dplyr::filter(Stock == stk.plot)
 perc.df
 
 system.label <- perc.df$System
 
-perc.df <- perc.df %>% select(-System,-Stock)
+perc.df <- perc.df %>% select(-System,-Stock,-Run)
 
 
 agencypm.tmp <- results.obj.inclagency$PercError  %>%
   dplyr::filter(Stock == stk.plot) %>%
   select(AgencyFC)
-
-
-
-
-
-
-
 
 
 obs.run <- src.obj$Predictions %>% dplyr::filter(Stock == stk.plot) %>% select(Run)
@@ -366,13 +423,144 @@ title(main=paste0(system.label,": ",stk.plot),outer=TRUE,line=-1,col.main="darkb
 title(main=paste0("Obs Run = ",prettyNum(obs.run,big.mark=",")),outer=TRUE,line=-2,col.main="darkblue",cex.main=0.95)
 
 
-
-
 dev.off()
 
 
 }
 
 
+##########################################################################
+# DETAILED DIAGNOSTIC BY STOCK FOR EACH TEAM, INCLUDING RETROSPECTIVE
+# not a function yet!
+
+stk.do <- "Chilko River"
+team.do <- "SalmonForecastR"
+
+
+
+
+
+team.df <- retro.df %>% dplyr::filter(Stock == stk.do) %>%
+  select(all_of(c("System","Stock","ReturnYear","Run",team.do))) %>%
+  mutate(Type="Retrospective") %>% bind_rows(
+    predictions.df %>% dplyr::filter(Stock == stk.do) %>%
+      select(all_of(c("System","Stock","Run",team.do))) %>%
+      mutate(ReturnYear = competition.year,Type="Prediction")
+    )
+
+names(team.df)[5] <- "TeamEntry"
+
+team.df
+
+agency.fc.sub <- agency.fc %>% dplyr::filter(Stock == stk.do)
+predictions.df.sub <- predictions.df %>% dplyr::filter(Stock == stk.do)
+
+models.metadata.sub <- models.metadata %>% dplyr::filter(Stock == stk.do,Team == team.do)
+team.info.sub <- team.info  %>% dplyr::filter(Team == team.do)
+
+title.use <- paste0(team.do,": ", stk.do," (",predictions.df.sub$System,")")
+
+
+ylim.use <- range(
+          0,
+          team.df$Run,
+          team.df$TeamEntry,
+          agency.fc %>% dplyr::filter(Stock == stk.do) %>% select(Forecast),
+          predictions.df %>% dplyr::filter(Stock == stk.do) %>% select(-System, -Stock,-Run)
+
+
+)
+
+ylim.use
+
+yr.range <- range(retro.yrs,competition.year)
+xlim.use <- yr.range +c(0,1.5)
+xlim.use
+
+layout(matrix(c(1,1,2,3),ncol=2,byrow=TRUE),height=c(3,1))
+
+
+plot(1:5,1:5,xlim = xlim.use,ylim=ylim.use,
+     axes=FALSE, xlab="Return Year",ylab="Run Size",
+    type="n")
+
+title(main=title.use,col.main="darkblue")
+
+rect(competition.year-0.25,ylim.use[1],
+     competition.year+0.25,ylim.use[2],
+     col="lightgrey",border="lightgrey")
+
+rect(competition.year+1-0.25,ylim.use[1],
+     competition.year+1+0.25,ylim.use[2],
+     col="white",border="lightgrey",lty=2)
+
+
+
+axis(2,las=1)
+axis(1, at=retro.yrs)
+axis(1, at = competition.year,label = paste0(competition.year,"\nFC Yr"),padj=0.3)
+
+obs.val <- unlist(predictions.df.sub$Run)
+
+team.fc.val <- unlist(predictions.df.sub %>% select(all_of(team.do)))
+
+segments(competition.year,team.fc.val,
+         xlim.use[2],team.fc.val,col="red",lty=2 )
+segments(competition.year,obs.val,
+         xlim.use[2],obs.val,col="darkblue",lty=2 )
+
+
+lines(team.df$ReturnYear,team.df$Run,
+  pch=19,col="darkblue",cex=1.2,type="o")
+
+points(competition.year,
+       obs.val,
+       pch=19,col="darkblue",cex=2)
+
+lines(team.df$ReturnYear,team.df$TeamEntry,
+      pch=21,col="red",bg="white",cex=1.2,type="o")
+
+points(competition.year,
+       team.fc.val,
+       pch=21,col="red",bg="white",cex=2,type="o")
+
+
+
+
+
+preds.vec <- predictions.df.sub %>% select(-System,-Stock,-Run)
+
+points(rep(competition.year+1,length(preds.vec)),
+       preds.vec,pch=19,col="darkgrey",cex=1.2)
+text(rep(competition.year+1.05,length(preds.vec)),
+     preds.vec,names(preds.vec),adj=0,xpd=NA,col="lightgrey")
+
+
+points(competition.year+1,
+       agency.fc.sub$Forecast,
+       pch=8,col="darkorange",bg="white",cex=1.2,type="o",lwd=3)
+text(competition.year+1.1,
+       agency.fc.sub$Forecast,
+     "Agency FC",col="darkorange",adj=0,xpd=NA,font=2)
+
+
+
+legend("topleft",legend = c("Obs","Team Entry"),
+       pch=c(19,21),col = c("darkblue","red"),pt.bg = "white",pt.cex=2,
+       bty="n",ncol=2)
+
+
+plot(1:5,1:5,axes=FALSE,xlab="",ylab="",type="n")
+text(0,5,"Team Model:",font =2,xpd=NA,adj=0 )
+text(0,3.5,paste(strwrap(models.metadata.sub$ModelNotes,width=60), collapse='\n'),
+     adj=c(0,1),xpd=NA)
+
+
+
+
+plot(1:5,1:5,axes=FALSE,xlab="",ylab="",type="n")
+text(0,5,"Agency Model:",font =2,xpd=NA,adj=0 )
+text(0,3.5,paste(strwrap(agency.fc.sub$ForecastModel,width=60), collapse='\n'),
+               adj=c(0,1),xpd=NA)
 
 

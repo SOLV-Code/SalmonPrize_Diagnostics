@@ -1,0 +1,13 @@
+Prize,Team,MAPE,MAE,MPE,MRE,RMSE
+1 Best Overall Prediction,SalmonCruz,1,2,1,3,1
+1 Best Overall Prediction,HookedOnData,2,1,3,1,2
+1 Best Overall Prediction,SalmonForecastR,3,3,2,2,3
+2 Best Bristol Bay Prediction,SalmonCruz,1,2,3,3,1
+2 Best Bristol Bay Prediction,HookedOnData,2,1,1,1,2
+2 Best Bristol Bay Prediction,SalmonForecastR,3,3,2,2,3
+3 Best Fraser Prediction,SalmonCruz,1,1,1,3,1
+3 Best Fraser Prediction,HookedOnData,2,2,3,2,2
+3 Best Fraser Prediction,SalmonForecastR,3,3,2,1,3
+4 Best Columbia Prediction,HookedOnData,1,1,1,1,1
+4 Best Columbia Prediction,SalmonForecastR,2,3,3,3,3
+4 Best Columbia Prediction,SalmonCruz,3,2,2,2,2

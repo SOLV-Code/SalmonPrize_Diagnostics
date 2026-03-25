@@ -1,7 +1,7 @@
 # Overview of Competing Models,,,,,,,,
 # Evolving draft of descriptive categories and more detailed notes,,,,,,,,
-"# Don't use commas in text, it messes up reading in the file (for now)",,,,,,,,
-"# ByAgeFlag = TRUE if forecasts were genersted separately for each age class, then summed.",,,,,,,,
+# Don't use commas in text; it messes up reading in the file (for now),,,,,,,,
+# ByAgeFlag = TRUE if forecasts were generated separately for each age class and then summed.,,,,,,,,
 Team,System,Stock,ModelCategory_General,ModelCategory_Specific,ModelNotes,ByAgeFlag,EnvCovar_Flag,EnvCovar_Notes
 HookedOnData,Bristol Bay,Alagnak River,,,,,,
 HookedOnData,Bristol Bay,Egegik River,,,,,,
@@ -101,9 +101,9 @@ SalmonCruz,Fraser River,Late Stuart River,,,,,,
 SalmonCruz,Fraser River,Quesnel River,,,,,,
 SalmonCruz,Fraser River,Raft River,,,,,,
 SalmonCruz,Fraser River,Stellako,,,,,,
-SalmonForecastR,Bristol Bay,Alagnak River,Sibling Regression,"Top-ranked model from retrospective for each age class. Retrospective ranking time window varied by age class, depending on observed pattern.",Age-specific model ranking in ForecastR App comparing various naïve models; time series models; and sibling regressions.  Age 3 used time series with exponential smoothing and Box-Cox transformation.  Age 4 used simple sib reg. Age 5 used sib reg with time-varying slope parameter (Kalman Filter). Age 6 used simple sib reg.,TRUE,FALSE,None in the top ranked models.
-SalmonForecastR,Bristol Bay,Egegik River,Sibling Regression,"Top-ranked model from retrospective for each age class. Retrospective ranking time window varied by age class, depending on observed pattern.",Age-specific model ranking in ForecastR App comparing various naïve models; time series models; and sibling regressions.  Age 3 used Naive 4-yr running Avg.  Ages 4  to  6 used sib reg with time-varying slope parameter (Kalman Filter). ,TRUE,FALSE,None in the top ranked models.
-SalmonForecastR,Bristol Bay,Igushik River,Mixed,"Top-ranked model from retrospective for each age class. Retrospective ranking time window varied by age class, depending on observed pattern.",Age-specific model ranking in ForecastR App comparing various naïve models; time series models; and sibling regressions.  Age 3 used Naive 4-yr running Avg.  Ages 4 used time series ARIMA model with Box-Cox transform. Ages 5 and  6 used sib reg with time-varying slope parameter (Kalman Filter). ,TRUE,,
+SalmonForecastR,Bristol Bay,Alagnak River,Sibling Regression,"Top-ranked model from retrospective for each age class. Retrospective ranking time window varied by age class, depending on observed pattern.",Age-specific model ranking in ForecastR App comparing various naive models; time series models; and sibling regressions.  Age 3 used time series with exponential smoothing and Box-Cox transformation.  Age 4 used simple sib reg. Age 5 used sib reg with time-varying slope parameter (Kalman Filter). Age 6 used simple sib reg.,TRUE,FALSE,None in the top ranked models.
+SalmonForecastR,Bristol Bay,Egegik River,Sibling Regression,"Top-ranked model from retrospective for each age class. Retrospective ranking time window varied by age class, depending on observed pattern.",Age-specific model ranking in ForecastR App comparing various naive models; time series models; and sibling regressions.  Age 3 used Naive 4-yr running Avg.  Ages 4  to  6 used sib reg with time-varying slope parameter (Kalman Filter). ,TRUE,FALSE,None in the top ranked models.
+SalmonForecastR,Bristol Bay,Igushik River,Mixed,"Top-ranked model from retrospective for each age class. Retrospective ranking time window varied by age class, depending on observed pattern.",Age-specific model ranking in ForecastR App comparing various naive models; time series models; and sibling regressions.  Age 3 used Naive 4-yr running Avg.  Ages 4 used time series ARIMA model with Box-Cox transform. Ages 5 and  6 used sib reg with time-varying slope parameter (Kalman Filter). ,TRUE,,
 SalmonForecastR,Bristol Bay,Kvichak River,,,,TRUE,,
 SalmonForecastR,Bristol Bay,Naknek River,,,,TRUE,,
 SalmonForecastR,Bristol Bay,Nushagak River,,,,TRUE,,
@@ -129,7 +129,7 @@ SeaMist,Fraser River,Late Stuart River,,,,,,
 SeaMist,Fraser River,Quesnel River,,,,,,
 SeaMist,Fraser River,Raft River,,,,,,
 SeaMist,Fraser River,Stellako,,,,,,
-FarSouthSalmon,Bristol Bay,Alagnak River,Sibling Regression,Top-ranked model from retrospective for each age class,"Age-specific model ranking in ForecastR App, comparing various naïve models, time series models, and sibling regressions.  Age",,,
+FarSouthSalmon,Bristol Bay,Alagnak River,,,,,,
 FarSouthSalmon,Bristol Bay,Egegik River,,,,,,
 FarSouthSalmon,Bristol Bay,Igushik River,,,,,,
 FarSouthSalmon,Bristol Bay,Kvichak River,,,,,,
