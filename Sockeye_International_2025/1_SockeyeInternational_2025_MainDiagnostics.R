@@ -434,8 +434,11 @@ dev.off()
 # not a function yet!
 
 
-teams.list
-team.do <- "SalmonForecastR"
+
+for(team.do in teams.labels){
+print(team.do)
+
+
 
 for(stk.do in predictions.df$Stock){
 
@@ -452,16 +455,34 @@ team.folder <- paste0(submissions.path,"/",team.info.sub$Team_FullName,"/Diagnos
 if(!dir.exists(team.folder)){dir.create(team.folder)}
 
 
+if(team.do %in% names(retro.df)){
 
-team.df <- retro.df %>% dplyr::filter(Stock == stk.do) %>%
+team.retro <- retro.df %>% dplyr::filter(Stock == stk.do) %>%
   select(all_of(c("System","Stock","ReturnYear","Run",team.do))) %>%
-  mutate(Type="Retrospective") %>% bind_rows(
+  mutate(Type="Retrospective")
+
+} # end if have retro
+
+
+if(!(team.do %in% names(retro.df))){
+
+  team.retro <-  retro.df %>% dplyr::filter(Stock == stk.do) %>%
+    select(all_of(c("System","Stock","ReturnYear","Run"))) %>%
+    mutate(Type="Retrospective")
+  team.retro[[team.do]] <-  NA
+
+} # end if have retro
+
+
+team.df <- team.retro %>% bind_rows(
     predictions.df %>% dplyr::filter(Stock == stk.do) %>%
       select(all_of(c("System","Stock","Run",team.do))) %>%
       mutate(ReturnYear = competition.year,Type="Prediction")
     )
 
-names(team.df)[5] <- "TeamEntry"
+
+names(team.df)[names(team.df) == team.do] <- "TeamEntry"
+
 
 team.df
 
@@ -474,14 +495,19 @@ ylim.use <- range(
           team.df$Run,
           team.df$TeamEntry,
           agency.fc %>% dplyr::filter(Stock == stk.do) %>% select(Forecast),
-          predictions.df %>% dplyr::filter(Stock == stk.do) %>% select(-System, -Stock,-Run)
-
-
-)
+          predictions.df %>% dplyr::filter(Stock == stk.do) %>% select(-System, -Stock,-Run),
+          na.rm=TRUE )
 
 ylim.use[2] <- ylim.use[2]*1.15
 
+if(ylim.use[2] >10^6){ y.scalar <- 10^6; y.scalar.label <- "(M)"}
+if(ylim.use[2] >= 10^3 & ylim.use[2] < 10^6){ y.scalar <- 10^3; y.scalar.label <- "(k)"}
+if(ylim.use[2] < 10^3){ y.scalar <- 1; y.scalar.label <- ""}
+
+ylim.use <- ylim.use/y.scalar
 ylim.use
+
+
 
 yr.range <- range(retro.yrs,competition.year)
 xlim.use <- yr.range +c(0,1.5)
@@ -501,17 +527,17 @@ layout(matrix(c(1,1,2,3),ncol=2,byrow=TRUE),height=c(3,1))
 
 
 plot(1:5,1:5,xlim = xlim.use,ylim=ylim.use,
-     axes=FALSE, xlab="Return Year",ylab="Run Size",
+     axes=FALSE, xlab="Return Year",ylab=paste("Run Size",y.scalar.label),
     type="n")
 
 title(main=title.use,col.main="darkblue")
 
-rect(competition.year-0.25,ylim.use[1],
-     competition.year+0.25,ylim.use[2],
+rect(competition.year-0.25,ylim.use[1]/y.scalar,
+     competition.year+0.25,ylim.use[2]/y.scalar,
      col="lightgrey",border="lightgrey")
 
-rect(competition.year+1-0.25,ylim.use[1],
-     competition.year+1+0.25,ylim.use[2],
+rect(competition.year+1-0.25,ylim.use[1]/y.scalar,
+     competition.year+1+0.25,ylim.use[2]/y.scalar,
      col="white",border="lightgrey",lty=2)
 
 
@@ -520,9 +546,9 @@ axis(2,las=1)
 axis(1, at=retro.yrs)
 axis(1, at = competition.year,label = paste0(competition.year,"\nFC Yr"),padj=0.3)
 
-obs.val <- unlist(predictions.df.sub$Run)
+obs.val <- unlist(predictions.df.sub$Run)/y.scalar
 
-team.fc.val <- unlist(predictions.df.sub %>% select(all_of(team.do)))
+team.fc.val <- unlist(predictions.df.sub %>% select(all_of(team.do)))/y.scalar
 
 segments(competition.year,team.fc.val,
          xlim.use[2],team.fc.val,col="red",lty=2 )
@@ -530,14 +556,14 @@ segments(competition.year,obs.val,
          xlim.use[2],obs.val,col="darkblue",lty=2 )
 
 
-lines(team.df$ReturnYear,team.df$Run,
+lines(team.df$ReturnYear,team.df$Run/y.scalar,
   pch=19,col="darkblue",cex=1.2,type="o")
 
 points(competition.year,
        obs.val,
        pch=19,col="darkblue",cex=2)
 
-lines(team.df$ReturnYear,team.df$TeamEntry,
+lines(team.df$ReturnYear,team.df$TeamEntry/y.scalar,
       pch=21,col="red",bg="white",cex=1.2,type="o")
 
 points(competition.year,
@@ -551,16 +577,16 @@ points(competition.year,
 preds.vec <- predictions.df.sub %>% select(-System,-Stock,-Run)
 
 points(rep(competition.year+1,length(preds.vec)),
-       preds.vec,pch=19,col="darkgrey",cex=1.2)
+       preds.vec/y.scalar,pch=19,col="darkgrey",cex=1.2)
 text(rep(competition.year+1.05,length(preds.vec)),
-     preds.vec,names(preds.vec),adj=0,xpd=NA,col="lightgrey")
+     preds.vec/y.scalar,names(preds.vec),adj=0,xpd=NA,col="lightgrey")
 
 
 points(competition.year+1,
-       agency.fc.sub$Forecast,
+       agency.fc.sub$Forecast/y.scalar,
        pch=8,col="darkorange",bg="white",cex=1.2,type="o",lwd=3)
 text(competition.year+1.1,
-       agency.fc.sub$Forecast,
+       agency.fc.sub$Forecast/y.scalar,
      "Agency FC",col="darkorange",adj=0,xpd=NA,font=2)
 
 
@@ -590,6 +616,6 @@ dev.off()
 
 
 } # end looping through stocks
-
+} #end looping through teams
 
 
