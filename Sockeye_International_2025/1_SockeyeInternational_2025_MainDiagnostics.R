@@ -433,8 +433,12 @@ dev.off()
 # DETAILED DIAGNOSTIC BY STOCK FOR EACH TEAM, INCLUDING RETROSPECTIVE
 # not a function yet!
 
-stk.do <- "Chilko River"
+
+teams.list
 team.do <- "SalmonForecastR"
+
+for(stk.do in predictions.df$Stock){
+
 
 agency.fc.sub <- agency.fc %>% dplyr::filter(Stock == stk.do)
 predictions.df.sub <- predictions.df %>% dplyr::filter(Stock == stk.do)
@@ -474,6 +478,8 @@ ylim.use <- range(
 
 
 )
+
+ylim.use[2] <- ylim.use[2]*1.15
 
 ylim.use
 
@@ -559,7 +565,8 @@ text(competition.year+1.1,
 
 
 
-legend("topleft",legend = c("Obs","Team Entry"),
+legend("topleft",#xlim.use[1],ylim.use[2],
+       legend = c("Obs","Team Entry"),
        pch=c(19,21),col = c("darkblue","red"),pt.bg = "white",pt.cex=2,
        bty="n",ncol=2)
 
@@ -580,3 +587,9 @@ text(1,4.5,paste(strwrap(agency.fc.sub$ForecastModel,width=60), collapse='\n'),
                adj=c(0,1),xpd=NA,cex=0.8)
 
 dev.off()
+
+
+} # end looping through stocks
+
+
+
