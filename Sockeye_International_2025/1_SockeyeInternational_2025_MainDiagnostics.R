@@ -619,3 +619,32 @@ dev.off()
 } #end looping through teams
 
 
+
+
+###############################
+# Does retrospective ranking predict 2025 performance
+# only have retro for 3 of 10 teams, but can check relative performance
+
+main.ranks <- results.obj$RanksByPrize
+
+retro.ranks <- results.obj.retro$RanksByPrize
+names(retro.ranks)[-c(1:2)] <- paste0(names(retro.ranks)[-c(1:2)],"_Retro")
+
+retro.ranks
+
+rank.comp <- main.ranks %>% left_join(retro.ranks,by = c("Prize","Team")) %>%
+                dplyr::filter(!is.na(MAPE_Retro))
+
+
+rank.comp
+
+
+plot(1:5,1:5,type="n",bty="n",las=1,
+     xlim=c()
+     ylim=c(length(teams.list)+0.5,0.5),
+     xlab = "Rank in Retrospective\n(MAPE across stocks and years 2020-2024)",
+     ylab = "Rank in Prediction\n(MAPE across stocks for 2025)")
+
+
+
+rank.comp$MAPE_Retro,rank.comp$MAPE
