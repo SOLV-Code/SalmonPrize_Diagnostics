@@ -5,6 +5,7 @@
 # IT USES OBJECTS FROM THE PREVIOUS SCRIPT
 # CODE HAS NOT YET BEEN CLEANED UP AND PUT INTO PROPER FUNCTIONS
 
+library(tidyverse)
 
 ############################################################################
 # 3) GENERATE SUMMARY PLOTS

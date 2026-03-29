@@ -41,7 +41,7 @@ We approached the 2025 competition as an illustration of the full workflow we've
 
 ## Results
 
-
+TBI
 
 
 
@@ -50,11 +50,45 @@ We approached the 2025 competition as an illustration of the full workflow we've
 
 
 
-* Maybe sibling regressions just are less useful for sockeye than for Chinook, given that a single age class is typically the bulk of the sockeye return?
+### Maybe sibling regressions just are less useful for sockeye than for Chinook, given that a single age class is typically the bulk of the sockeye return?
 
-* So why did sibling regressions tend to come out as top-ranked in the model selection workflow with *forecastR*? -> Need to revisit the rationale for model selection in sockeye applications.
 
-* Maybe sockeye returns (or all salmon?) have become so variable due to yet-to-be identified background variables that retrospective performance over the last few years just isn't a useful selection criterion anymore?
+*  The agency forecast does not use sibling regression to predict the main age class (age 4 as a function of age 3 last year) for the 5 Fraser sockeye stocks in the competition. They do use sibling regression for the typically small component of age 5 returns (i.e., last year's return of the main age class as a predictor for the older returns from the same cohort this year).
+
+* **CHECK if any Bristol Bay agency forecasts use sib reg**
+
+* Current suite of *forecastR* model forms developed to address Chinook Tech Comm needs. Next round of work will build an option to load custom model forms and test against built-in models. Test cases for custom model form will include spawner-recruit models. We'll see if those do any better...
+
+
+### So why did sibling regressions tend to come out as top-ranked in the model selection workflow with *forecastR*? 
+
+* Need to revisit the rationale for model selection in sockeye applications, based on analyses of 2025 results across team entries. 
+
+
+### Maybe sockeye returns (or all salmon?) have become so variable due to yet-to-be identified background variables that retrospective performance over the last few years just isn't a useful selection criterion anymore?
+
+Only three of the teams submitted retrospective results. This did not give a large enough sample to detect any meaningful relationship between team rank in the retrospective vs. team rank in the 2025 predictions. However, looking at stock-specifc results for those 3 teams:
+
+- There is a strong relationship between better retrospective performance and a closer forecast for 2025, when looking only at those cases where absolute percent error is less than 100% (right panel). 
+
+- There are some large exceptions to this relationship (left panel). 
+   - Two Quesnel forecasts have a similarly large error in the retrospective, but one produced a 2025 forecast that was pretty close, and the other was way off. Need to look at the model forms to check if there's any clue to potential mechanism.
+   - Three cases had low error in the retrospective but large error in 2025 forecast. What was the model structure and what mechanism did that miss?
+
+
+
+
+### Is the percent error performance measure introducing a selection bias towards underestimates when dealing with the kinds of very large percent errors encountered in sockeye forecasting?
+
+A forecast coming in at double observed has APE = 100%, and a forecast coming in at half observed has APE= 50%, but they are both off by a factor of 2. The larger the error, the more pronounced the difference in APE between over and under-prediction errors with the same order of magnitude. A 10 times over-prediction results in APE =900%, but a forecast at 1/10th of observed has APE = 90%.
+
+Figure below illustrates the issue for a stock with observed run = 4 million (like Chilko in 2025) and forecasts ranging from 400,000 (1/10th of observed) to 40 million (10 x observed).
+
+
+
+
+
+
 
 
 

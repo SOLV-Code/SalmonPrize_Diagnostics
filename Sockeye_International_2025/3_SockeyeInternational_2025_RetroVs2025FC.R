@@ -5,7 +5,7 @@
 # IT USES OBJECTS FROM THE PREVIOUS SCRIPT
 # CODE HAS NOT YET BEEN CLEANED UP AND PUT INTO PROPER FUNCTIONS
 
-
+library(tidyverse)
 
 ###############################
 # Does retrospective ranking predict 2025 performance?
@@ -70,6 +70,17 @@ write_csv(ape.comp,paste0(folder.use,"/Diagnostics/COMPARISON_ByStock_RetroVsFC.
 
 
 
+# plot
+
+
+png(filename = paste0(folder.use,"/Diagnostics/COMPARISON_ByStock_RetroVsFC_Plots.png"),
+    width = 480*5.5, height = 480*3.9, units = "px", pointsize = 14*3.7, bg = "white",  res = NA)
+
+
+#par(mfrow=c(2,2),mai=c(2.5,2.5,2,2))
+
+par(mfrow=c(1,2),mai=c(3.5,3.5,4.5,1.5))
+
 
 
 # PLOT FULL RANGE
@@ -82,15 +93,10 @@ plot(1:5,1:5,type="n",bty="n",
      xlab = "Retrospective MAPE (2020-2024)",
      ylab = "APE for 2025 Forecast",
      xlim = xlim.use,ylim=ylim.use,las=1,
-     main = "Retrospective vs. Forecast Performance By Stock\nFull Range")
+     main = "Full Range",main.line=0)
 
-legend("topleft",legend = retro.teams.list,
-       pch = teams.pch,pt.bg=teams.bg,col="darkblue",
-       bty="n",ncol=3,pt.cex=2
-       )
-
-segments(0,100,100,100,col="red",lty=2)
-segments(100,0,100,100,col="red",lty=2)
+segments(0,100,100,100,col="red",lty=2,lwd=3)
+segments(100,0,100,100,col="red",lty=2,lwd=3)
 
 for(i in 1:length(retro.teams.list)){
 team.do <- retro.teams.list[i]
@@ -116,7 +122,8 @@ text(df.sub$MAPE_Retro[flag.idx]+10,
 }
 
 
-
+title(main="Retrospective vs. Forecast Performance By Stock",
+      outer=TRUE, line=-1)
 
 
 # PLOT ZOOMED IN
@@ -128,18 +135,16 @@ plot(1:5,1:5,type="n",bty="n",
      xlab = "Retrospective MAPE (2020-2024)",
      ylab = "APE for 2025 Forecast",
      xlim = xlim.use,ylim=ylim.use,las=1,
-     main = "Retrospective vs. Forecast Performance By Stock\nZoomed In")
+     main = "Zoomed In",main.line=0)
 
-legend("topleft",legend = retro.teams.list,
+legend(-60,ylim.use[2]+30,legend = retro.teams.list,
        pch = teams.pch,pt.bg=teams.bg,col="darkblue",
-       bty="n",ncol=3,pt.cex=2
+       bty="n",pt.cex=1.6,xpd=NA,cex=1.1
 )
 
-segments(0,100,100,100,col="red",lty=2)
-segments(100,0,100,100,col="red",lty=2)
 
 
-# fitted line
+# fitted line with Bayesian Regression using stan_glm()
 fit.src <- ape.comp %>% dplyr::filter(MAPE_Retro <= 100,APE_2025FC <= 100)
 
 
@@ -153,13 +158,35 @@ bayes.reg.fit <- stan_glm(APE_2025FC ~ MAPE_Retro, data = fit.src, seed = 123)
 # model summary
 print(bayes.reg.fit)
 
-# Visualize the posterior distribution of a coefficient (e.g., 'wt')
-mcmc_dens(bayes.reg.fit, pars = c("MAPE_Retro"))
+# posteriors
+post.df <- as.data.frame(bayes.reg.fit)
+head(post.df)
+dim(post.df)
 
-# Get the 89% credible interval (CI) for parameters
-hdi(bayes.reg.fit)
+# plot posterior distributions
+#mcmc_dens(bayes.reg.fit, pars = c("MAPE_Retro"))
+#mcmc_dens(bayes.reg.fit, pars = c("(Intercept)"))
 
-post.pred <- posterior_predict(bayes.reg.fit)
+# Calculate credible intervals (CI) for parameters
+#hdi(bayes.reg.fit,ci=0.8)
+
+x.vals <- data.frame(MAPE_Retro =seq(0,xlim.use[2],length.out=100) )
+
+post.pred <- as.data.frame(posterior_predict(bayes.reg.fit,newdata = x.vals) )
+
+
+med.line <- unlist(post.pred %>% summarise(across(everything(), ~ median(.x))))
+lower.line <- unlist(post.pred %>% summarise(across(everything(), ~ quantile(.x,probs=0.8))))
+upper.line <- unlist(post.pred %>% summarise(across(everything(), ~ quantile(.x,probs=0.2))))
+
+
+polygon(c(unlist(x.vals),rev(unlist(x.vals))),
+        c(lower.line,rev(upper.line)),col="lightgrey",border="lightgrey")
+lines(unlist(x.vals),med.line,col="darkgrey",lwd=3)
+
+segments(0,100,100,100,col="red",lty=2,lwd=3)
+segments(100,0,100,100,col="red",lty=2,lwd=3)
+
 
 
 
@@ -190,7 +217,7 @@ for(i in 1:length(retro.teams.list)){
 }
 
 
-
+dev.off()
 
 
 
