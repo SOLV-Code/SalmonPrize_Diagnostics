@@ -39,3 +39,39 @@ We approached the 2025 competition as an illustration of the full workflow we've
 [This repo](https://github.com/SOLV-Code/Team-forecastR-2025SockeyeInternational) has detailed documentation for each step. [This Readme](https://github.com/SOLV-Code/Team-forecastR-2025SockeyeInternational/tree/main/NOTES/7_Select_2025FC) lists the top-ranked models by stock and age class, shows the resulting 2025 forecasts, and shows retrospective diagnostics.
 
 
+## Results
+
+
+
+
+
+
+## Lessons Learned / Questions for Next Round
+
+
+
+* Maybe sibling regressions just are less useful for sockeye than for Chinook, given that a single age class is typically the bulk of the sockeye return?
+
+* So why did sibling regressions tend to come out as top-ranked in the model selection workflow with *forecastR*? -> Need to revisit the rationale for model selection in sockeye applications.
+
+* Maybe sockeye returns (or all salmon?) have become so variable due to yet-to-be identified background variables that retrospective performance over the last few years just isn't a useful selection criterion anymore?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

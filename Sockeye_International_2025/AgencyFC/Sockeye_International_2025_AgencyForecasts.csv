@@ -1,19 +1,19 @@
-# Published Agency Forecasts for 14 Sockeye Stocks,,,
-# DFO Forecast for Fraser River stocks: Table 1A in Dionne et al (2025). https://publications.gc.ca/collections/collection_2025/mpo-dfo/fs97-6/Fs97-6-3731-eng.pdf,,,
-# ADFG Forecasts for Bristol Bay: https://www.adfg.alaska.gov/static/applications/dcfnewsrelease/1643354231.pdf,,,
-# WDFW Forecast for Columbia: https://wdfw.wa.gov/sites/default/files/2025-02/2024-results-2025-expectations-2-5-25.pdf,,,
-System,Stock,Forecast,ForecastModel
-Bristol Bay,Alagnak River,4970000,TBD
-Bristol Bay,Egegik River,6460000,TBD
-Bristol Bay,Igushik River,2790000,TBD
-Bristol Bay,Kvichak River,7380000,TBD
-Bristol Bay,Naknek River,3660000,TBD
-Bristol Bay,Nushagak River,10580000,TBD
-Bristol Bay,Ugashik River,6900000,TBD
-Bristol Bay,Wood River,7630000,TBD
-Columbia,All of Columbia River,350200,TBD
-Fraser River,Chilko River,928000,Cyclic Ricker model for age 4; sibling regression for age 5
-Fraser River,Late Stuart River,608000,Avg R/S for previous generation for age 4; sibling regression for age 5
-Fraser River,Quesnel River,260000,Ricker with near-shore SST at Entrance Island in spring of 2023
-Fraser River,Raft River,13000,Like-Last-Year for age  4; sibling regression for age 5
-Fraser River,Stellako,281000,Larkin for age 4; sibling regression for age 5
+# Published Agency Forecasts for 14 Sockeye Stocks,,,,,,,,
+# DFO Forecast for Fraser River stocks: Table 1A in Dionne et al (2025). https://publications.gc.ca/collections/collection_2025/mpo-dfo/fs97-6/Fs97-6-3731-eng.pdf,,,,,,,,
+# ADFG Forecasts for Bristol Bay: https://www.adfg.alaska.gov/static/applications/dcfnewsrelease/1643354231.pdf,,,,,,,,
+# WDFW Forecast for Columbia: GET SOURCE,,,,,,,,
+System,Stock,Forecast,ModelCategory_General,ModelCategory_Specific,ModelNotes,ByAgeFlag,EnvCovar_Flag,EnvCovar_Notes
+Bristol Bay,Alagnak River,4970000,TBD,,,,,
+Bristol Bay,Egegik River,6460000,TBD,,,,,
+Bristol Bay,Igushik River,2790000,TBD,,,,,
+Bristol Bay,Kvichak River,7380000,TBD,,,,,
+Bristol Bay,Naknek River,3660000,TBD,,,,,
+Bristol Bay,Nushagak River,10580000,TBD,,,,,
+Bristol Bay,Ugashik River,6900000,TBD,,,,,
+Bristol Bay,Wood River,7630000,TBD,,,,,
+Columbia,All of Columbia River,298313,TBD,,,,,
+Fraser River,Chilko River,928000,Spawner-Recruit,Selected from a short-list of top-ranked models identified during periodic review process. ,Cyclic Ricker model for age 4; sibling regression for age 5,TRUE,FALSE,NONE IN THE TOP-RANKED MODELS. DFO'S Fraser Sk forecasts process includes periodic peer-review process with detailed stock-specific performance evaluation of many alternative model types. A short-list of candidate models is then identified for each stock. Annual forecasts are then selected from the short-list based on expert judgment of the context for the year (brood year conditions; cycle line patterns; environmental conditions throughout the life cycle).
+Fraser River,Late Stuart River,608000,Naive Running Average,Selected from a short-list of top-ranked models identified during periodic review process. ,Avg R/S for previous generation for age 4; sibling regression for age 5,TRUE,FALSE,NONE IN THE TOP-RANKED MODELS. DFO'S Fraser Sk forecasts process includes periodic peer-review process with detailed stock-specific performance evaluation of many alternative model types. A short-list of candidate models is then identified for each stock. Annual forecasts are then selected from the short-list based on expert judgment of the context for the year (brood year conditions; cycle line patterns; environmental conditions throughout the life cycle).
+Fraser River,Quesnel River,260000,Spawner-Recruit,Selected from a short-list of top-ranked models identified during periodic review process. ,Ricker with near-shore SST at Entrance Island in spring of 2023,TRUE,TRUE,NEAR-SHORE SEA SURFACE TEMPERATURE AT OCEAN ENTRY. Ricker SR-model with near-shore SST at Entrance Island in spring of 2023 was selected from among the short-listed models for Quesnel. DFO'S Fraser Sk forecasts process includes periodic peer-review process with detailed stock-specific performance evaluation of many alternative model types. A short-list of candidate models is then identified for each stock. Annual forecasts are then selected from the short-list based on expert judgment of the context for the year (brood year conditions; cycle line patterns; environmental conditions throughout the life cycle).
+Fraser River,Raft River,13000,Naive Running Average,Selected from a short-list of top-ranked models identified during periodic review process. ,Like-Last-Year for age  4; sibling regression for age 5,TRUE,FALSE,NONE IN THE TOP-RANKED MODELS. DFO'S Fraser Sk forecasts process includes periodic peer-review process with detailed stock-specific performance evaluation of many alternative model types. A short-list of candidate models is then identified for each stock. Annual forecasts are then selected from the short-list based on expert judgment of the context for the year (brood year conditions; cycle line patterns; environmental conditions throughout the life cycle).
+Fraser River,Stellako,281000,Spawner-Recruit,Selected from a short-list of top-ranked models identified during periodic review process. ,Larkin for age 4; sibling regression for age 5,TRUE,FALSE,NONE IN THE TOP-RANKED MODELS. DFO'S Fraser Sk forecasts process includes periodic peer-review process with detailed stock-specific performance evaluation of many alternative model types. A short-list of candidate models is then identified for each stock. Annual forecasts are then selected from the short-list based on expert judgment of the context for the year (brood year conditions; cycle line patterns; environmental conditions throughout the life cycle).
