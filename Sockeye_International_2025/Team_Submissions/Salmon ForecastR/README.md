@@ -76,6 +76,7 @@ Only three of the teams submitted retrospective results. This did not give a lar
    - Three cases had low error in the retrospective but large error in 2025 forecast. What was the model structure and what mechanism did that miss?
 
 
+ <img src="https://github.com/SOLV-Code/Team-forecastR-2025SockeyeInternational/blob/main/OUTPUT/1_Exploratory_Data_Analyses/EnvCovarPreScreen/Diagnostics_Envhttps://github.com/SOLV-Code/SalmonPrize_Diagnostics/blob/main/Sockeye_International_2025/Diagnostics/COMPARISON_ByStock_RetroVsFC_Plots.png" width="800">
 
 
 ### Is the percent error performance measure introducing a selection bias towards underestimates when dealing with the kinds of very large percent errors encountered in sockeye forecasting?
@@ -84,6 +85,8 @@ A forecast coming in at double observed has APE = 100%, and a forecast coming in
 
 Figure below illustrates the issue for a stock with observed run = 4 million (like Chilko in 2025) and forecasts ranging from 400,000 (1/10th of observed) to 40 million (10 x observed).
 
+
+ <img src="https://github.com/SOLV-Code/SalmonPrize_Diagnostics/blob/main/Sockeye_International_2025/Diagnostics/PercentError_Properties.png" width="800">
 
 
 
