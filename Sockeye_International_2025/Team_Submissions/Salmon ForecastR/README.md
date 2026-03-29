@@ -69,7 +69,7 @@ TBI
 
 Only three of the teams submitted retrospective results. This did not give a large enough sample to detect any meaningful relationship between team rank in the retrospective vs. team rank in the 2025 predictions. However, looking at stock-specifc results for those 3 teams:
 
-- There is a strong relationship between better retrospective performance and a closer forecast for 2025, when looking only at those cases where absolute percent error is less than 100% (right panel). 
+- There is a strong relationship between better retrospective performance and a closer forecast for 2025, when looking only at those cases where absolute percent error is less than 100% (right panel). Fitted line is posterior predictive distribution from a Bayesian regression fit using *stan_glm()* from the *rstanarm* package, showing median and 80% of distribution. Details in [this script](https://github.com/SOLV-Code/SalmonPrize_Diagnostics/blob/main/Sockeye_International_2025/3_SockeyeInternational_2025_RetroVs2025FC.R).
 
 - There are some large exceptions to this relationship (left panel). 
    - Two Quesnel forecasts have a similarly large error in the retrospective, but one produced a 2025 forecast that was pretty close, and the other was way off. Need to look at the model forms to check if there's any clue to potential mechanism.
@@ -77,6 +77,8 @@ Only three of the teams submitted retrospective results. This did not give a lar
 
 
  <img src="https://github.com/SOLV-Code/SalmonPrize_Diagnostics/blob/main/Sockeye_International_2025/Diagnostics/COMPARISON_ByStock_RetroVsFC_Plots.png" width="800">
+
+
 
 
 ### Is the percent error performance measure introducing a selection bias towards underestimates when dealing with the kinds of very large percent errors encountered in sockeye forecasting?
@@ -91,21 +93,26 @@ Figure below illustrates the issue for a stock with observed run = 4 million (li
 
 
 
+### Priorities for 2026 Competition?
+
+* Focus on stocks with long-running smolt programs (Chilko,Kvichak, Ugashik and Egegik) to see if we can isolate a marine survival signal for the 2025 return. 
+
+* Almost all teams underpredicted Chilko by a lot
+* 2 teams came very close for Egegik (Salmanazar, Salmon Cruz)
+* Teams were all over the place for Kvichak (but Agency FC was close)
+* Several teams came pretty close for Ugashik, including us.
 
 
+ <img src="https://github.com/SOLV-Code/SalmonPrize_Diagnostics/blob/main/Sockeye_International_2025/Team_Submissions/Salmon%20ForecastR/DiagnosticPlots/SalmonForecastR_Chilko%20River.png" width="800">
 
 
+ <img src="https://github.com/SOLV-Code/SalmonPrize_Diagnostics/blob/main/Sockeye_International_2025/Team_Submissions/Salmon%20ForecastR/DiagnosticPlots/SalmonForecastR_Egegik%20River.png" width="800">
 
 
+ <img src="https://github.com/SOLV-Code/SalmonPrize_Diagnostics/blob/main/Sockeye_International_2025/Team_Submissions/Salmon%20ForecastR/DiagnosticPlots/SalmonForecastR_Kvichak%20River.png" width="800">
 
 
-
-
-
-
-
-
-
+ <img src="https://github.com/SOLV-Code/SalmonPrize_Diagnostics/blob/main/Sockeye_International_2025/Team_Submissions/Salmon%20ForecastR/DiagnosticPlots/SalmonForecastR_Ugashik%20River.png" width="800">
 
 
 
