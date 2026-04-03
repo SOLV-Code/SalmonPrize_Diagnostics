@@ -79,6 +79,27 @@ predictions.inclagency.df <- predictions.df %>%
 write_csv(predictions.inclagency.df,paste0(folder.use,"/Diagnostics/MAIN_PredictionsSummary_InclAgencyFC.csv"))
 
 
+
+# create alternative version that includes agency forecasts AND competitor ensemble forecast
+# using mean or median across teams
+
+
+predictions.inclagencyensemble.df <- predictions.inclagency.df %>%
+  rowwise() %>%
+  mutate(
+    Ensemble_Mean = mean(c_across(all_of(teams.labels)), na.rm = TRUE),
+    Ensemble_Median = median(c_across(all_of(teams.labels)), na.rm = TRUE)) %>% ungroup
+write_csv(predictions.inclagencyensemble.df,paste0(folder.use,"/Diagnostics/MAIN_PredictionsSummary_InclAgencyFCAndEnsemble.csv"))
+
+
+
+
+#  mutate( = across(, ~ mean(.x) ))
+
+
+
+
+
 # repeat for retrospective
 # (same structure, just has a year column as well, and getting the run numbers from the data pack)
 
@@ -152,6 +173,20 @@ write_csv(results.obj.inclagency$Results_Details,paste0(folder.use,"/Diagnostics
 
 results.obj.inclagency$RanksByPrize
 write_csv(results.obj.inclagency$RanksByPrize,paste0(folder.use,"/Diagnostics/MAIN_RanksByPrize_InclAgencyFC.csv"))
+
+# calculate alternative results treating agency forecast and ensemble across teams as additional competitors
+
+results.obj.inclagencyandensemble <- calc_PMandRanks(predictions.inclagencyensemble.df)
+
+names(results.obj.inclagencyandensemble)
+
+results.obj.inclagencyandensemble$Results_Details
+write_csv(results.obj.inclagencyandensemble$Results_Details,paste0(folder.use,"/Diagnostics/DETAILS_RanksAndValuesForAltPM_InclAgencyFCAndEnsemble.csv"))
+
+results.obj.inclagencyandensemble$RanksByPrize
+write_csv(results.obj.inclagencyandensemble$RanksByPrize,paste0(folder.use,"/Diagnostics/MAIN_RanksByPrize_InclAgencyFCAndEnsemble.csv"))
+
+
 
 
 # calculate retrospective results
