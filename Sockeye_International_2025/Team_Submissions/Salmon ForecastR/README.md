@@ -65,7 +65,7 @@ TBI
 * Need to revisit the rationale for model selection in sockeye applications, based on analyses of 2025 results across team entries. 
 
 
-### Maybe sockeye returns (or all salmon?) have become so variable due to yet-to-be identified background variables that retrospective performance over the last few years just isn't a useful selection criterion anymore?
+### Maybe sockeye returns (or all salmon?) have become so variable due to yet-to-be-identified mechanisms  that retrospective performance over the last few years just isn't a useful selection criterion anymore?
 
 Only three of the teams submitted retrospective results. This did not give a large enough sample to detect any meaningful relationship between team rank in the retrospective vs. team rank in the 2025 predictions. However, looking at stock-specifc results for those 3 teams:
 
