@@ -60,9 +60,19 @@ TBI
 * Current suite of *forecastR* model forms developed to address Chinook Tech Comm needs. Next round of work will build an option to load custom model forms and test against built-in models. Test cases for custom model form will include spawner-recruit models. We'll see if those do any better...
 
 
-### So why did sibling regressions tend to come out as top-ranked in the model selection workflow with *forecastR*? 
+### Was it a matter of the suite of candidate models we tested, or a matter of how we selected among candidate models? 
 
 * Need to revisit the rationale for model selection in sockeye applications, based on analyses of 2025 results across team entries. 
+
+* It wasn't clear cut either candidate models or model selection. Figure below shows the range and mean of our total forecasts across candidate model forms (i.e. predicted return for all ages using each model) compared to observed returns. It also shows the submitted forecast, which used the "best" model for each age class and summed them up. Model selection was based on scaled ranking across 6 performance measures (MRE, MAE, MPE, MAPE, MASE, RMSE) in the retrospective test. 
+   * For 7 of 14 stocks, the range of total forecasts (using the same model form to forecast all ages) includes the observed run. For those 7 stocks, some improved model selection or some form of model averaging could have produced a closer forecast. For 3 of them, the mean of candidate total forecasts would have been very close but the age-specific model selection produced a worse forecast (Egegik, Naknek, Wood). For one of them (Ugashik) the age-specific model selection resulted in a better closer forecast than the mean of totals across models. For the remaining three (Alagnak, Quesnel, Stellako), the mean of candidate total forecasts didn't come very close, but would have still been closer than the age-specific model selection.
+   * For 1 stock (Kvichak), the age specific model selection resulted in a forecast that was much lower than any of the total forecasts that use the same model for all ages (i.e., red X is outside the blue whiskers). Some models predicted large number of age 4, others large numbers of age 5, the age-specific model selection picked a low forecast for each age class, based on the retrospective. Why?  -> Need to dig deeper!
+   * For 4 stocks, the lower end of the range across total forecasts is off the chart (i.e., forecasted less than 1/10th of the observed return). For 2 of those, the submitted forecast based on age-specific model selection is also off the chart (Raft, Late Stuart)
+   * **For 9 of the 14 stocks, the mean across total forecasts would have done better than the age-specific model selection**
+   
+ <img src="https://github.com/SOLV-Code/SalmonPrize_Diagnostics/blob/main/Sockeye_International_2025/Team_Submissions/Salmon%20ForecastR/CustomDiagnostics/CandidateModel_Comparison_TeamSalmonForecastR.png" width="800">
+
+
 
 
 ### Maybe sockeye returns (or all salmon?) have become so variable due to yet-to-be-identified mechanisms  that retrospective performance over the last few years just isn't a useful selection criterion anymore?
@@ -95,12 +105,15 @@ Figure below illustrates the issue for a stock with observed run = 4 million (li
 
 ### Priorities for 2026 Competition?
 
-* Focus on stocks with long-running smolt programs (Chilko,Kvichak, Ugashik and Egegik) to see if we can isolate a marine survival signal for the 2025 return. 
+* Add spawner-recruit model forms to the mix!
 
-* Almost all teams underpredicted Chilko by a lot
-* 2 teams came very close for Egegik (Salmanazar, Salmon Cruz)
-* Teams were all over the place for Kvichak (but Agency FC was close)
-* Several teams came pretty close for Ugashik, including us.
+* Explore model averaging and more complex forms of ensemble models.
+
+* Focus on stocks with long-running smolt programs (Chilko,Kvichak, Ugashik and Egegik) to see if we can isolate a marine survival signal for the 2025 return and extrapolate to 2026 from there:  
+   * Almost all teams underpredicted Chilko by a lot
+   * 2 teams came very close for Egegik (Salmanazar, Salmon Cruz)
+   * Teams were all over the place for Kvichak (but Agency FC was close)
+   * Several teams came pretty close for Ugashik, including us.
 
 
  <img src="https://github.com/SOLV-Code/SalmonPrize_Diagnostics/blob/main/Sockeye_International_2025/Team_Submissions/Salmon%20ForecastR/DiagnosticPlots/SalmonForecastR_Chilko%20River.png" width="800">
