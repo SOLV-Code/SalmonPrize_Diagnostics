@@ -105,10 +105,12 @@ Figure below illustrates the issue for a stock with observed run = 4 million (li
 * Explore model averaging and more complex forms of ensemble models.
 
 * Focus on stocks with long-running smolt programs (Chilko,Kvichak, Ugashik and Egegik) to see if we can isolate a marine survival signal for the 2025 return and extrapolate to 2026 from there:  
-   * Almost all teams underpredicted Chilko by a lot
+   * Almost all teams underpredicted Chilko by a lot (Published analyses of Chilko smolt data: [McKinnell and Irvine (2021)](https://www.sciencedirect.com/science/article/pii/S007966112100118X#f0010), [Irvine and Akenhead (2013)](https://academic.oup.com/mcf/article/5/1/303/7826806), [Rechisky et al. (2018)](https://cdnsciencepub.com/doi/10.1139/cjfas-2017-0425%40cjfas-otn.issue01)
    * 2 teams came very close for Egegik (Salmanazar, Salmon Cruz)
    * Teams were all over the place for Kvichak (but Agency FC was close)
    * Several teams came pretty close for Ugashik, including us.
+
+
 
 
  <img src="https://github.com/SOLV-Code/SalmonPrize_Diagnostics/blob/main/Sockeye_International_2025/Team_Submissions/Salmon%20ForecastR/DiagnosticPlots/SalmonForecastR_Chilko%20River.png" width="800">
