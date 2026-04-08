@@ -110,18 +110,56 @@ Figure below illustrates the issue for a stock with observed run = 4 million (li
    * Teams were all over the place for Kvichak (but Agency FC was close)
    * Several teams came pretty close for Ugashik, including us.
 
+* Starting to compile relevant info below
 
+### Chilko 2025 Forecast Performance vs. Available Chilko Smolt Information
+ 
+ 
+- Chilko are mostly age 4.
 
+- The main brood year for 2025 returns was 2021.
 
+- 2021 total spawners were near top end of observed range since 1960s
+
+- Resulting x_2 smolts in 2023: large number (in top 5 of abundance) and average length (85mm,right in the middle of typical 80-90mm range)
+
+- estimated marine survival (recruits per smolt) has been generally declining since the 1990s, with some recent uptick from very low survivals of 2015 and 2016 broods.
+
+- Preliminary marine survival for 2021 brood year, given 4mill total return and assuming 75%-90% age 4 in the return was **5%-6%**, closer to the average of the 1990s, and at the top end of the range we have seen since 2000. (Since 2000, only 2002 and 2004 were above 5% marine survival)
+
+- What was different for this cohort that entered the ocean in 2023 that resulted in marine survival more than 3 times better then the last few brood years?
+ 
+ 
+ **Chilko 2025 Forecast Performance (using forecastR App)**
+ 
  <img src="https://github.com/SOLV-Code/SalmonPrize_Diagnostics/blob/main/Sockeye_International_2025/Team_Submissions/Salmon%20ForecastR/DiagnosticPlots/SalmonForecastR_Chilko%20River.png" width="800">
 
 
 
+**Chilko Marine Survival By Decade (Recruits per 100 Smolts)**
+
+|Brood Year| Min| Mean| Max| NumObs|
+|---:| ---:| ---:| ---:| ---:|
+| 1950 to 1959| 3.9| 9.5 | 20.2| 4  |
+| 1960 to 1969| 1.7| 7.9 | 20.5| 10 |
+| 1970 to 1979| 3.4| 8.4 | 15.9| 10 |
+| 1980 to 1989| 4.1| 11.5| 23.1| 9  |
+| 1990 to 1999| 2.6| 6.5 | 13.1| 10 |
+| 2000 to 2009| 0.3| 3.4 | 6   | 10 |
+| 2010 to 2019| 0.2| 2   | 4.7 | 8  |
+| 2020        | 1.5|     | 1   |    |
+|**Prelim 2021**|  | 5-6 |     |    |
+
+**Chilko Smolt Survival Forecast**
+
+(NOTE: This figure and source data are from a project with Tŝilhqot’in Fisheries, and were not used as part of the SalmonForecastR team entry for 2025)**
+
+ <img src="https://github.com/SOLV-Code/SalmonPrize_Diagnostics/blob/main/Sockeye_International_2025/Team_Submissions/Salmon%20ForecastR/CustomDiagnostics/ChilkoSmoltSurvival_FromTsilhqotinFisheries.png" width="800">
 
 
-**INSERT PLOT OF 4_2 marine survivals**
 
 
+### 2025 Forecast for Bristol Bay Stocks with Smolt Programs
 
 
 
