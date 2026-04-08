@@ -147,12 +147,12 @@ Figure below illustrates the issue for a stock with observed run = 4 million (li
 | 1990 to 1999| 2.6| 6.5 | 13.1| 10 |
 | 2000 to 2009| 0.3| 3.4 | 6   | 10 |
 | 2010 to 2019| 0.2| 2   | 4.7 | 8  |
-| 2020        | 1.5|     | 1   |    |
+| 2020        |    | 1.5 |     | 1  |
 |**Prelim 2021**|  | 5-6 |     |    |
 
 **Chilko Smolt Survival Forecast**
 
-(NOTE: This figure and source data are from a project with Tŝilhqot’in Fisheries, and were not used as part of the SalmonForecastR team entry for 2025)**
+(NOTE: This figure and source data are from a project with [Tŝilhqot’in Fisheries](https://tsilhqotin.ca/our-territory/fisheries/), and were not used as part of the SalmonForecastR team entry for 2025)
 
  <img src="https://github.com/SOLV-Code/SalmonPrize_Diagnostics/blob/main/Sockeye_International_2025/Team_Submissions/Salmon%20ForecastR/CustomDiagnostics/ChilkoSmoltSurvival_FromTsilhqotinFisheries.png" width="800">
 
