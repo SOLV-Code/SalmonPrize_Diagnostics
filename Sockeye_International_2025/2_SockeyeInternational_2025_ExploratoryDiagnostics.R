@@ -434,7 +434,7 @@ text(1,4.5,paste(strwrap(models.metadata.sub$ModelNotes,width=60), collapse='\n'
 
 plot(1:5,1:5,axes=FALSE,xlab="",ylab="",type="n")
 text(1,5,"Agency Model:",font =2,xpd=NA,adj=0 )
-text(1,4.5,paste(strwrap(agency.fc.sub$ForecastModel,width=60), collapse='\n'),
+text(1,4.5,paste(strwrap(agency.fc.sub$ModelNotes,width=60), collapse='\n'),
                adj=c(0,1),xpd=NA,cex=0.8)
 
 dev.off()
